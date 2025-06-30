@@ -1,0 +1,118 @@
+---
+title: Template
+description: Page démo
+---
+import { Card, Aside, FileTree, Steps, Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+## Écrire un nouveau laboratoire
+
+Pour écrire un nouveau laboratoire, il suffit d'ajouter un fichier mdx dans le répertoire `src/content/docs/laboratoires`.
+Une première page blanche est disponible pour Redis (`redis.mdx`).
+
+`mdx`est une version enrichie de `md` dans lequel on peut ajouter des "composants". Ce guide est fait pour comprendre leur utilisation dans les grandes lignes.
+
+## astro.config.mjs
+
+En principe, il n'est pas nécessaire de modifier ce fichier. Tout ce qui se trouve dans le répertoire `src/content/doc/laboratoires` est automatiquement ajouté dans la table des matières (un titre par fichier type markdown ou mdx).
+
+Une raison de modifier ce fichier est d'ajouter un répertoire cousin.
+
+## `index.mdx`
+
+Page d'accueil du site. En principe, il ne faut pas le modifier.
+
+## Composants de starlight
+
+Voici une liste d'utilisation des composants de bases (ne pas oublier l'import des composants utilisés).
+
+Pour plus de détail : [lire la documentation]
+
+### Les cartes
+
+<Card title="Carte" icon="seti:kotlin">
+ Une carte avec une superbe icône.
+</Card>
+
+* L'attribut `icon` n'est pas obligatoire. 
+* Voir la [liste](https://starlight.astro.build/fr/reference/icons/#toutes-les-ic%C3%B4nes) des icones
+
+### Les apartés
+
+<Aside>Contenu informatif.</Aside>
+<Aside type="tip">Contenu astuce.</Aside>
+<Aside type="caution">Contenu attention</Aside>
+<Aside type="danger">Contenu demandant une attention forte</Aside>
+
+### Arborescence de fichier
+
+<FileTree>
+
+- astro.config.mjs
+- package.json
+- src
+  - js
+    - services
+      - RoomServices.js
+  - components
+    - Header.astro
+    - Title.astro
+  - pages/
+
+</FileTree>
+
+### Étapes
+
+<Steps>
+
+1. Initialiser le dépôt
+
+   ```sh showLineNumbers=false
+   git init
+   ```
+
+1. Écouter tous les fichiers
+  
+   ```bash showLineNumbers=false
+   git add .
+   ```
+1. Faire un commit
+  
+   ```shell title="commit" showLineNumbers=false
+   git commit -m "initial commit"
+   ```
+1. Et bien sûr, faire un push
+  
+   ```shell showLineNumbers=false
+   git push
+   ```
+</Steps>
+
+### Gestion des onglets
+
+<Tabs>
+  <TabItem label="Windows">
+  ```sh showLineNumbers
+    git init
+  ```
+  </TabItem>
+  <TabItem label="Linux">
+  ```sh showLineNumbers=false
+    git init .
+  ```
+  </TabItem>
+</Tabs>
+
+
+### Un peu de code
+
+```js showLineNumbers
+function() {
+    console.log();
+}
+```
+
+import identiteFct from "./code_sample/foobar.js?raw";
+
+export const highlights = ['use', 'function', 8, 10]; //Tout ce qui doit être mis en évidence
+
+<Code code={identiteFct} lang="js" title="code/foobar.js"  del={5} ins={4} mark={highlights} showLineNumbers={false}/>
