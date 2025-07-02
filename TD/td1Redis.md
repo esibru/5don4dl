@@ -131,7 +131,24 @@ La façon dont Redis assure la persistance des données peut (évidemment !) se 
 ``` bash
 $  SAVE
 ```
-Ceci crée un fichier binaire `dump.rdp` que Redis peut utiliser pour reconstituer la DB en mémoire centrale. Redis exécute automatiquement un SAVE lorsque le serveur est stoppé (lorsqu'on quitte le conteneur Docker, dans notre cas).
+Ceci crée un fichier binaire `dump.rdp` que Redis peut utiliser pour reconstituer la DB en mémoire centrale. Redis exécute automatiquement un SAVE lorsque le serveur est stoppé (lorsqu'on stoppe le conteneur Docker, dans notre cas).
+
+## 4) Librairies clientes
+
+Redis fournit différentes librairies permettant de se connecter au serveur à partir d'une application Java, Python, JavaScript, C++, etc (voir la documentation en ligne).
+
+Sous Java, nous utiliserons la librairie `Jedis`. Créez maintenant un nouveau projet Java sous Maven. Ajoutez la dépendance suivante au pom.xml:
+
+```xml
+<dependency>
+    <groupId>redis.clients</groupId>
+    <artifactId>jedis</artifactId>
+    <version>6.0.0</version>
+</dependency>
+```
+
+
+
 
 
 
