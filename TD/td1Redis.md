@@ -26,9 +26,11 @@ Redis n'est pas officiellement supporté sur Windows, nous vous proposons donc i
 Pour débuter, tapez: 
 
 ``` bash
-$ docker run --name MyRedis -d redis
+$ docker run --name MyRedis -p 6379:6379 -d redis
 ```
 Ceci crée une nouvelle image avec Redis installé, lance un conteneur associé appelé MyRedis (utilisez un autre nom de votre choix si vous le désirez) et lance le serveur Redis sur ce conteneur. Ceux d'entre-vous qui n'utilisent pas Docker devront lancer le serveur à la main au moyen de la commande `redis-server`.
+
+L'option `-p 6379:6379` permet d'exposer le port 6379 (port standard auquel est connecté le serveur Redis) et le rediriger vers le port 6379 de la machine hôte. Ceci nous permettra (voir plus loin) de pouvoir communiquer avec ce serveur à partir d'une application externe.
 
 Pensez à vérifier que le conteneur est bien actif au moyen de la commande:
 
