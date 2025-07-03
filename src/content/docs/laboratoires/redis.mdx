@@ -54,7 +54,7 @@ $ docker start MyRedis
 ```
 </Aside>
 
-## 3) Commandes de base sdr
+## 3) Commandes de base 
 
 Pour nous familiariser avec les commandes de base de Redis, lançons le client Redis standard:
 
@@ -63,23 +63,23 @@ $ redis-cli
 ```
 Le serveur attend alors que vous entriez une commande.
 
-### Nouvelle clé
+### Ajouter une valeur de type String
 
-Pour stocker un nouveau couple (clé, valeur), utilisez simplement la commande `SET`. Par exemple, pour stocker la note (sur 20) de l'étudiant g12345 pour le cours de 5DON4, tapez:
+Pour stocker un nouveau couple (clé, valeur) ou valeur est de type String, utilisez simplement la commande `SET`. Par exemple, pour stocker la note (sur 20) de l'étudiant g12345 pour le cours de 5DON4, tapez:
 
 ``` bash showLineNumbers=false
 $ SET g12345 18
 ```
+SET stocke la valeurs comme un String (même si vous lui passer un nombre entier).
 
-### Lire une valeur
+### Lire une valeur de type String
 
 Pour lire la valeur associée à la clé `g12345`:
 
 ``` bash showLineNumbers=false
 $ GET g12345
 ```
-
-Redis accepte n'importe quelle suite d'octet en guise de clé (avec une taille de clé limitée à 512 MB), ici nous nous simplifierons la vie et utiliserons simplement des String. Les valeurs associées aux clés peuvent être de différent types, les commandes GET et SET stockent les valeurs comme des String (même si vous leur passez des nombres entiers).
+Redis accepte n'importe quelle suite d'octet en guise de clé (avec une taille de clé limitée à 512 MB), ici nous nous simplifierons la vie et utiliserons simplement des String.  
 
 ### Lister toutes les clés stockées
 
@@ -145,7 +145,7 @@ N'hésitez pas à découvrir d'autres commandes Redis par vous même en parcoura
 Redis étant un système In-Memory, les données sont à priori stockées en mémoire centrale (et pas sur le disque) sauf configuration contraire.
 </Aside>
 
-### Configuration de la persistance des données
+### Sauver les données sur le disque
 
 La façon dont Redis assure la persistance des données peut (évidemment !) se configurer, nous allons en parler dans la suite. Sachez déjà qu'il est possible de forcer une sauvegarde sur le disque en entrant:
 
@@ -169,3 +169,118 @@ Sous Java, nous utiliserons la librairie `Jedis`. Créez maintenant un nouveau p
 </dependency>
 ```
 </Card>
+
+Après avoir importé la classe `Jedis`:
+
+```java
+import redis.clients.jedis.Jedis;
+```
+l'accès au serveur est très simple:
+
+```java
+Jedis jedis = new Jedis("localhost", 6379);
+
+jedis.set("g12345" + i, Integer.toString(14));
+
+if (jedis.exists("g23456")){
+            // La clé g23456 existe
+        System.out.println("La note de g23456 vaut : " + jedis.get("g23456"));
+}
+```
+
+## 5) Configurer Redis
+
+Quelles machines hôtes doivent être acceptées ? Faut-il fournir un mot de passe pour la connexion ? Comment gérer la persistance des données ? Tous ces paramètres doivent être précisés dans un fichier `redis.conf` qui doit être fourni à Redis lors du lancement du serveur.
+
+Voyons ensemble comment faire cela.
+
+<Steps>
+1. Créez un fichier texte nommé `redis.conf` et contenant (pour le moment) uniquement la ligne:
+
+`
+SAVE 20 10
+`
+
+Cette ligne va demande à Redis de procéder à une sauvegarde sur le disque toutes les 20 secondes a condition qu'au moins 10 clés aient été modifiées (mises à jour, ajout, suppression).
+
+2. Lancer le serveur Redis avec ce fichier de configuration. Pour cela, le plus simple est de créer un nouveau conteneur avec `docker run` (si vous souhaitez supprimer l'ancien: `docker rm -f MyRedis`). 
+
+Nous allons devoir donner plusieurs arguments à la commande:
+
+- le chemin d'accès au fichier `redis.conf`,
+
+- l'endroit où ce fichier doit être stocké dans le conteneur. Comme il s'agit d'une image Linux, nous le placerons dans  `/usr/local/etc/redis/redis.conf`
+
+- et finalement, lui dire de lancer le serveur Redis au moyen de ce fichier de configuration.
+
+</Steps>
+
+La commande a utiliser est donc la suivante:
+
+``` bash showLineNumbers=false
+docker run -d --name MyRedisConf -v chemin/vers/votre/redis.conf:/usr/local/etc/redis/redis.conf redis redis-server /usr/local/etc/redis/redis.conf
+```
+A vous de tester: exécuter les deux étapes ci-dessus. Connectez-vous au serveur au moyen de `redis.cli`, ajoutez trois couples clés-valeurs, attendez vingts secondes et constatez qu'aucun fichier `dumb.rdb` n'est créé. Après l'ajout du quatrième couple, une sauvegarde est bien effectuée.
+
+## 6) La persistance de données sous Redis
+
+Redis propose plusieurs façons d'assurer la persistance des données sur le disque. Passons les en revue ici, en précisant dans chaque cas comment adapter le fichier de configuration (voir ci-dessus). 
+
+### Pas de persistance du tout
+
+Si aucune option de sauvegarde n'est configurée, les données sont perdues en cas de crash du serveur. Cette option peut être envisagée si un perte des données est sans grande conséquence sur l'application.
+
+Pour désactiver la persistance, ajoutez simplement la ligne suivante dans le fichier de configuration:
+
+`
+SAVE ""
+`
+
+### Sauver régulièrement toute la base de données sur le disque (snapshotting)
+
+Redis effectue des sauvegardes régulières de toutes les données dans le fichier `dump.rdb` mentionné ci-dessus. Ce fichier est appelé un **snapshot file** dans la documentation Redis. Nous avons déjà vu à la section précédente comment configurer ceci, ajoutez la ligne:
+
+`
+SAVE nbSecondes nbModifs
+`
+
+pour demander à Redis de sauver les données sur le disque toutes les `nbSecondes`, pourvu que `nbModifs` aient été effectuées.
+
+### Sauver uniquement les opérations d'écriture (AOF file)
+
+Avec cette option, Redis enregistre uniquement les différentes opérations dans un fichier de log. Le serveur est alors capable de reconstituer la base de donnée sur base de ce fichier, qui est appelé **append only file (AOF)** dans la documentation Redis.
+
+Ajoutez la ligne:
+
+`
+APPENDONLY YES
+`
+
+dans le fichier de configuration pour que Redis ajoute chaque nouvelle modification de données à la fin du fichier AOF. Il est également possible de configurer la fréquence à laquelle Redis force le système d'exploitation à écrire les données du fichier (présentes initialement dans le cache) sur le disque (appel système `fsync` sous Linux). Des appels à `fsync` trop fréquents ralentissent le système, mais permettent de minimiser les données perdues en cas de crash du serveur, voir la documentation pour plus de détails à ce niveau.
+ 
+
+### Faut-il utiliser le snapshotting ou la sauvegarde au moyen de fichiers AOF ?
+
+La documentation Redis mentionne des avantages et des inconvénients pour chacune des approches. En résumé:
+
+**Avantages du snapshoting**: le fichier rdb est à priori très compact, facile à transférer et utiliser, peu couteux en terme de performance (le stockage est effectué par un processus fils (au moyen d'un appel système`fork`), ce qui évite de bloquer la DB en attendant que la sauvegarde se fasse), le redémarrage après un crash est (à priori) très rapide (plus rapide qu'avec un AOF).
+
+**Désavantages du snapshoting**: si un crash survient entre deux snapshot les données sont perdues, de nombreux `fork` peuvent éventuellement ralentir le système d'exploitation.
+
+**Avantages des fichiers AOF**:  les sauvegardes peuvent à priori être effectuées beaucoup plus régulièrement (voir la configuration des appels à `fsync') sans trop impacter la performance, peu de risque de corruption du fichier (on se contente de logger les informations les unes à la suite des autres, sans modifier ce qui précède).
+
+**Désavantage des fichiers AOF**: cela prend plus de place qu'un fichier rdb (même si Redis est capable d'optimiser la taille du fichier AOF en arrière-plan).
+
+Par ailleurs, comme mentionné dans la documentation Redis:
+
+*The general indication you should use both persistence methods is if you want a degree of data safety comparable to what PostgreSQL can provide you.* (Source: https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
+
+Voici un exemple de fichier de configuration avec diverses options de sauvegardes activées:
+
+```
+APPENDONLY YES
+
+SAVE 600 50
+
+SAVE 1200 10
+```
