@@ -304,10 +304,14 @@ Les étapes à suivre sont les suivantes:
 
 <Steps>
 1. Déterminez l'adresse IP du serveur maître.
+
 2. Créez un fichier de configuration pour le serveur esclave avec la ligne suivante:
 ```
 REPLICAOF adresse_ip_du_maître 6379
 ```
 3. Lancez un conteneur Redis sur la machine maître, en prenant bien garde d'exposer le port 6379 (comme expliqué en début de TD).
+
 4. Lancez un conteneur Redis sur la machine esclave en lui fournissant le fichier de configuration créé ci-dessus. Vérifiez que la connection avec le serveur maître s'est bien déroulée (allez voir dans les logs, comme expliqué ci-dessus).
 </Steps>
+
+Il ne reste plus qu'a tester: ajoutez quelques clés sur le serveur maître. Constatez que ces données sont automatiquement répliquées sur le serveur esclave. Avec Redis, un serveur maître peut admettre un nombre quelconque d'esclaves.
