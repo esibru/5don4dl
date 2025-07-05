@@ -7,7 +7,7 @@ import { Card, Aside, Icon, Steps, Code } from '@astrojs/starlight/components';
 
 ## Solution sans docker-compose
 
-Pour avoir un peu d'information : [docker - devops by jlc](https://lechjo01.github.io/devops/docs/Conteneurisation/td04-%20docker)
+Voir le super cours de Jonathan pour les détails : [docker - devops by jlc](https://lechjo01.github.io/devops/docs/Conteneurisation/td04-%20docker)
 
 <Steps>
 1. Créer le réseau
@@ -51,15 +51,25 @@ docker exec -it redis-replica redis-cli info replication
 
 [Documentation](https://lechjo01.github.io/devops/docs/Conteneurisation/td05-compose)
 
+### Script docker-compose
+
+
 import dockerCompose from "./code_sample/redis-docker-compose.yml?raw";
 
 <Code code={dockerCompose} lang="yml" title="redis-docker-compose.yml" showLineNumbers={false}/>
 
 ### Exécuter le script docker-compose
 
-``` bash showLineNumbers=false frame="none"
+<Card title="Exécuter le script" icon="seti:docker">
+```bash showLineNumbers=false frame="none"
 docker-compose -f redis-docker-compose.yml up -d
 ```
+
+* `-f` permet de spécifier le nom du fichier. Sans l'option, c'est le fichier `docker-compose.yml` qui est exécuté.
+* `-d` permet de lancer en arrière plan.
+</Card>
+
+#### Tester la configuration
 
 <Steps>
 
