@@ -196,22 +196,22 @@ Voyons ensemble comment faire cela.
 
 <Steps>
 1. Créez un fichier texte nommé `redis.conf` et contenant (pour le moment) uniquement la ligne:
-
-`
-SAVE 20 10
-`
-
-Cette ligne va demande à Redis de procéder à une sauvegarde sur le disque toutes les 20 secondes a condition qu'au moins 10 clés aient été modifiées (mises à jour, ajout, suppression).
+   
+   `
+   SAVE 20 10
+   `
+   
+   Cette ligne va demande à Redis de procéder à une sauvegarde sur le disque toutes les 20 secondes a condition qu'au moins 10 clés aient été modifiées (mises à jour, ajout, suppression).
 
 2. Lancer le serveur Redis avec ce fichier de configuration. Pour cela, le plus simple est de créer un nouveau conteneur avec `docker run` (si vous souhaitez supprimer l'ancien: `docker rm -f MyRedis`). 
 
-Nous allons devoir donner plusieurs arguments à la commande:
-
-- le chemin d'accès au fichier `redis.conf`,
-
-- l'endroit où ce fichier doit être stocké dans le conteneur. Comme il s'agit d'une image Linux, nous le placerons dans  `/usr/local/etc/redis/redis.conf`
-
-- et finalement, lui dire de lancer le serveur Redis au moyen de ce fichier de configuration.
+   Nous allons devoir donner plusieurs arguments à la commande:
+   
+   - le chemin d'accès au fichier `redis.conf`,
+   
+   - l'endroit où ce fichier doit être stocké dans le conteneur. Comme il s'agit d'une image Linux, nous le placerons dans  `/usr/local/etc/redis/redis.conf`
+   
+   - et finalement, lui dire de lancer le serveur Redis au moyen de ce fichier de configuration.
 
 </Steps>
 
@@ -306,9 +306,9 @@ Les étapes à suivre sont les suivantes:
 1. Déterminez l'adresse IP du serveur maître.
 
 2. Créez un fichier de configuration pour le serveur esclave avec la ligne suivante:
-```
-REPLICAOF adresse_ip_du_maître 6379
-```
+   ```
+   REPLICAOF adresse_ip_du_maître 6379
+   ```
 3. Lancez un conteneur Redis sur la machine maître, en prenant bien garde d'exposer le port 6379 (comme expliqué en début de TD).
 
 4. Lancez un conteneur Redis sur la machine esclave en lui fournissant le fichier de configuration créé ci-dessus. Vérifiez que la connection avec le serveur maître s'est bien déroulée (allez voir dans les logs, comme expliqué ci-dessus).
