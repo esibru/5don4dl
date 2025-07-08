@@ -188,7 +188,17 @@ if (jedis.exists("g23456")){
 }
 ```
 
-## 5) Configurer Redis
+## 5) Un cas concret d'utilisation de Redis: le rate limiting
+
+Lisons ce qu'trouve dans la documentation Redis: 
+
+*Rate limiting is a technique used in computer systems to control the rate at which requests are sent or processed in order to maintain system stability and security. In web applications, rate limiting restricts the number of requests that a client can make to a server within a given time period to prevent abuse and ensure fair usage of resources among multiple clients.*
+
+(Source: https://redis.io/glossary/rate-limiting/)
+
+Le document ci-dessus mentionne plusieurs application Web célèbres utilisant cette technique (Google Maps, Twitter, ...)
+
+## 6) Configurer Redis
 
 Quelles machines hôtes doivent être acceptées ? Faut-il fournir un mot de passe pour la connexion ? Comment gérer la persistance des données ? Tous ces paramètres doivent être précisés dans un fichier `redis.conf` qui doit être fourni à Redis lors du lancement du serveur.
 
@@ -229,7 +239,7 @@ docker logs MyRedisConf
 
 A vous de tester: exécuter les deux étapes ci-dessus. Connectez-vous au serveur au moyen de `redis.cli`, ajoutez trois couples clés-valeurs, attendez vingts secondes et constatez qu'aucun fichier `dumb.rdb` n'est créé. Après l'ajout du quatrième couple, une sauvegarde est bien effectuée.
 
-## 6) La persistance de données sous Redis
+## 7) La persistance de données sous Redis
 
 Redis propose plusieurs façons d'assurer la persistance des données sur le disque. Passons les en revue ici, en précisant dans chaque cas comment adapter le fichier de configuration (voir ci-dessus). 
 
@@ -292,7 +302,7 @@ SAVE 600 50
 SAVE 1200 10
 ```
 
-## 7) La réplication
+## 8) La réplication
 
 Une autre façon d'assurer la persistence des données sous Redis est la **réplication**: dupliquer la base de données sur deux (ou plusieurs) machines de façon à améliorer l'accessibilité des données (d'une part) et à assurer une forme de sauvegarde d'autre part (si une machine tombe en panne, les données sont toujours disponibles sur l'autre). Nous avions introduit la réplication dans le cours de 2DON1, et nous allons ici la mettre en oeuvre concrètement avec Redis.
 
