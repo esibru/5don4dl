@@ -191,9 +191,21 @@ jedis.close();
 ```
 
 <Aside type="caution" title="Redis et le multithreading">
-La classe `Jedis` présentée ci-dessus n'est pas thread-safe. Pour une application multi-thread, passez par la classe `JedisPool` (présentée ci-dessous).
+La classe `Jedis` présentée n'est pas thread-safe.
 </Aside>
 
+Pour une application multi-thread, passez par la classe `JedisPool`:
+
+```java
+/* JedisPool permet de gérer les connections au serveur 
+de façon thread-safe.
+*/
+JedisPool jpool = new JedisPool("localhost", 6379);
+        
+try(Jedis jedis = jpool.getResource()){
+     // L'objet jedis s'utilise comme présenté ci-dessus.
+}
+```
 
 
 ## 5) Un cas concret d'utilisation de Redis: le rate limiting
