@@ -302,6 +302,12 @@ Pour désactiver la persistance, ajoutez simplement la ligne suivante dans le fi
 SAVE ""
 `
 
+**Exemple d'utilisation **: Redis est utilisée comme tampon (mémoire cache) entre l'application qu'on souhaite développer et une base de données utilisée pour la persistance (celle-ci peut par exemple être une DB SQL standard).
+
+Avant d'accéder à la base de donnée persistante, l'application regarde d'abord dans le tampon Redis si la donnée ne s'y trouve pas. 
+
+En cas de crash du serveur Redis, seul le cache est perdu ce qui n'est pas genant (les données sont de toute façon stockées de façon sûr par le SGBD utilisé pour la persistance).
+
 ### Sauver régulièrement toute la base de données sur le disque (snapshotting)
 
 Redis effectue des sauvegardes régulières de toutes les données dans le fichier `dump.rdb` mentionné ci-dessus. Ce fichier est appelé un **snapshot file** dans la documentation Redis. Nous avons déjà vu à la section précédente comment configurer ceci, ajoutez la ligne:
