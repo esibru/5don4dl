@@ -294,15 +294,15 @@ Redis propose plusieurs façons d'assurer la persistance des données sur le dis
 
 ### Pas de persistance du tout
 
-Si aucune option de sauvegarde n'est configurée, les données sont perdues en cas de crash du serveur. Cette option peut être envisagée si un perte des données est sans grande conséquence sur l'application.
-
-Pour désactiver la persistance, ajoutez simplement la ligne suivante dans le fichier de configuration:
+Si aucune option de sauvegarde n'est configurée, les données sont perdues en cas de crash du serveur. Pour désactiver la persistance, ajoutez simplement la ligne suivante dans le fichier de configuration:
 
 `
 SAVE ""
 `
 
-**Exemple d'utilisation ** : Redis est utilisée comme tampon (mémoire cache) entre l'application qu'on souhaite développer et une base de données utilisée pour la persistance (celle-ci peut par exemple être une DB SQL standard).
+Cette option peut être envisagée si un perte des données est sans grande conséquence sur l'application.
+
+**Exemple** : Redis est utilisée comme tampon (mémoire cache) entre l'application qu'on souhaite développer et une base de données utilisée pour la persistance (celle-ci peut par exemple être une DB SQL standard).
 
 Avant d'accéder à la base de donnée persistante, l'application regarde d'abord dans le tampon Redis si la donnée ne s'y trouve pas. 
 
