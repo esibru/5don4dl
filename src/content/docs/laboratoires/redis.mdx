@@ -230,8 +230,11 @@ Voici comment procéder:
 
 <Steps>
 1. Créez un nouveau projet avec Maven contenant la dépendance à `Jedis` dans le `pom.xml`.
+
 2. Créez un package `model` ainsi qu'une classe `RateLimiter`. Cette classe comportera trois attributs: le nombre `maxReq` maximal de requête acceptée par intervalle de temps, la durée en secondes `nbSeq` de l'intervalle de temps, ainsi qu'un objet `JedisPool` qui sera utilisé pour la connection au serveur Redis.
+
 3. Ajoutez un constructeur a deux paramètres à `RateLimiter`permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellent se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
+
 4. Ajoutez finalement une méthode: 
 
 
