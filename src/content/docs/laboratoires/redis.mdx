@@ -236,6 +236,12 @@ Voici comment procéder:
 3. Ajoutez un constructeur a deux paramètres à `RateLimiter` permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellent se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
 
 
+4. Ajoutez finalement une méthode: 
+`
+public boolean requestAllowed(String userId)
+`
+vérifiant qu'un user donné est autorisé à soumettre une requête: soit la clé `limit:userId` n'existe pas dans la base de données (en ce cas, on l'y ajoute avec une valeur de 1 et on demande à Redis de la supprimer après `nbSeq` secondes) soit elle existe. Dans ce dernier cas: on augmente la valeur de la clé de 1, on regarde si cette valeur a atteint ou dépassé `maxReq` et on renvoie `false` le cas échéant.
+
 </Steps>
 
 Testez votre classe `RateLimiter` au moyen d'une classe principale pertinente (n'oubliez évidemment pas de lancer le serveur Redis au pré
