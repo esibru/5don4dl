@@ -191,7 +191,7 @@ jedis.close();
 ```
 
 <Aside type="caution" title="Redis et le multithreading">
-La classe `Jedis` présentée n'est pas thread-safe.
+L'approche présenté ci-dessus (utilisant uniquement la classe `Jedis`) n'est pas thread-safe.
 </Aside>
 
 Pour une application multi-thread, passez par la classe `JedisPool`:
@@ -216,7 +216,17 @@ Lisons ce qu'trouve dans la documentation Redis:
 
 (Source: https://redis.io/glossary/rate-limiting/)
 
-Le document ci-dessus mentionne plusieurs application Web célèbres utilisant cette technique (Google Maps, Twitter, ...)
+Le document ci-dessus mentionne plusieurs application Web célèbres utilisant cette technique (Google Maps, Twitter, ...).
+
+Nous allons ici vous demander de développer une petite application (minimaliste) simulant un rate limiter avec Redis.
+
+<Steps>
+1. Créez un nouveau projet avec Maven contenant la dépendance à `Jedis` dans le `pom.xml`.
+2. Créez un package `model` ainsi qu'une classe `RateLimiter`. Cette classe comportera trois attributs: le nombre `maxReq` maximal de requête acceptée par intervalle de temps, la durée en secondes `nbSeq` de l'intervalle de temps, ainsi qu'un objet `JedisPool` qui sera utilisé pour la connection au serveur Redis.
+3. Ajoutez un constructeur a deux paramètres à `RateLimiter`permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellent se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
+
+</Steps>
+
 
 ## 6) Configurer Redis
 
