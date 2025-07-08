@@ -186,7 +186,15 @@ if (jedis.exists("g23456")){
             // La clé g23456 existe
         System.out.println("La note de g23456 vaut : " + jedis.get("g23456"));
 }
+
+jedis.close();
 ```
+
+<Aside type="caution" title="Redis et le multithreading">
+La classe `Jedis` présentée ci-dessus n'est pas thread-safe. Pour une application multi-thread, passez par la classe `JedisPool` (présentée ci-dessous).
+</Aside>
+
+
 
 ## 5) Un cas concret d'utilisation de Redis: le rate limiting
 
