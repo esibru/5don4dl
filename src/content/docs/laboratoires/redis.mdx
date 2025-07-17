@@ -45,7 +45,7 @@ Redis n'est pas officiellement supporté sur Windows, nous vous proposons donc i
 </Steps>
 
 <Aside type="caution" title="La création de l'image Redis ne doit être exécutée qu'une seule fois">
-À l'avenir, pour stoper/lancer le conteneur `MyRedis`, utilisez:
+À l'avenir, pour stopper/lancer le conteneur `MyRedis`, utilisez:
 
 ``` bash showLineNumbers=false
 $ docker stop MyRedis
@@ -70,7 +70,7 @@ Pour stocker un nouveau couple (clé, valeur) ou valeur est de type String, util
 ``` bash showLineNumbers=false
 $ SET g12345 18
 ```
-SET stocke la valeurs comme un String (même si vous lui passer un nombre entier).
+SET stocke la valeur comme un String (même si vous lui passer un nombre entier).
 
 ### Lire une valeur de type String
 
@@ -79,7 +79,7 @@ Pour lire la valeur associée à la clé `g12345`:
 ``` bash showLineNumbers=false
 $ GET g12345
 ```
-Redis accepte n'importe quelle suite d'octet en guise de clé (avec une taille de clé limitée à 512 MB), ici nous nous simplifierons la vie et utiliserons simplement des String.  
+Redis accepte n'importe quelle suite d'octets en guise de clé (avec une taille de clé limitée à 512 MB), ici nous nous simplifierons la vie et utiliserons simplement des String.  
 
 ### Lister toutes les clés stockées
 
@@ -216,9 +216,9 @@ Lisons ce qu'trouve dans la documentation Redis:
 
 (Source: https://redis.io/glossary/rate-limiting/)
 
-Le document ci-dessus mentionne plusieurs application Web célèbres utilisant cette technique (Google Maps, Twitter, ...).
+Le document ci-dessus mentionne plusieurs applications Web célèbres utilisant cette technique (Google Maps, X anciennement Twitter, ...).
 
-Nous allons ici vous demander de développer une petite classe Java simulant un rate limiter au moyen de Redis: a chaque utilisateur (identifé par un `userId`) sera associé une clé sur le serveur Redis nommée `limit:userId` qui enregistrera le nombre de requêtes faites par l'utilisateur au cours d'un intervalle de temps donné.
+Nous allons ici vous demander de développer une petite classe Java simulant un rate limiter au moyen de Redis: à chaque utilisateur (identifié par un `userId`) sera associé une clé sur le serveur Redis nommée `limit:userId` qui enregistrera le nombre de requêtes faites par l'utilisateur au cours d'un intervalle de temps donné.
 
 Si ce nombre est supérieur à une certaine limite, la requête ne sera pas autorisée. Vous aurez besoin des commandes Redis suivantes:
 
@@ -233,7 +233,7 @@ Voici comment procéder:
 
 2. Créez un package `model` ainsi qu'une classe `RateLimiter`. Cette classe comportera trois attributs: le nombre `maxReq` maximal de requête acceptée par intervalle de temps, la durée en secondes `nbSeq` de l'intervalle de temps, ainsi qu'un objet `JedisPool` qui sera utilisé pour la connection au serveur Redis.
 
-3. Ajoutez un constructeur a deux paramètres à `RateLimiter` permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellent se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
+3. Ajoutez un constructeur a deux paramètres à `RateLimiter` permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellement se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
 
 
 4. Ajoutez finalement une méthode: 
@@ -244,8 +244,7 @@ vérifiant qu'un user donné est autorisé à soumettre une requête: soit la cl
 
 </Steps>
 
-Testez votre classe `RateLimiter` au moyen d'une classe principale pertinente (n'oubliez évidemment pas de lancer le serveur Redis au pré
-alable).
+Testez votre classe `RateLimiter` au moyen d'une classe principale pertinente (n'oubliez évidemment pas de lancer le serveur Redis au préalable).
 
 ## 6) Configurer Redis
 
@@ -306,7 +305,7 @@ Cette option peut être envisagée si un perte des données est sans grande cons
 
 Avant d'accéder à la base de donnée persistante, l'application regarde d'abord dans le tampon Redis si la donnée ne s'y trouve pas. 
 
-En cas de crash du serveur Redis, seul le cache est perdu ce qui n'est pas genant (les données sont de toute façon stockées de façon sûre par le SGBD utilisé pour la persistance).
+En cas de crash du serveur Redis, seul le cache est perdu ce qui n'est pas gênant (les données sont de toute façon stockées de façon sûre par le SGBD utilisé pour la persistance).
 
 ### Sauver régulièrement toute la base de données sur le disque (snapshotting)
 
@@ -320,7 +319,7 @@ pour demander à Redis de sauver les données sur le disque toutes les `nbSecond
 
 ### Sauver uniquement les opérations d'écriture (AOF file)
 
-Avec cette option, Redis enregistre uniquement les différentes opérations dans un fichier de log. Le serveur est alors capable de reconstituer la base de donnée sur base de ce fichier, qui est appelé **append only file (AOF)** dans la documentation Redis.
+Avec cette option, Redis enregistre uniquement les différentes opérations dans un fichier de log. Le serveur est alors capable de reconstituer la base de données sur base de ce fichier, qui est appelé **append only file (AOF)** dans la documentation Redis.
 
 Ajoutez la ligne:
 
@@ -337,7 +336,7 @@ La documentation Redis mentionne des avantages et des inconvénients pour chacun
 
 **Avantages du snapshoting**: le fichier rdb est à priori très compact, facile à transférer et utiliser, peu couteux en terme de performance (le stockage est effectué par un processus fils (au moyen d'un appel système`fork`), ce qui évite de bloquer la DB en attendant que la sauvegarde se fasse), le redémarrage après un crash est (à priori) très rapide (plus rapide qu'avec un AOF).
 
-**Désavantages du snapshoting**: si un crash survient entre deux snapshot les données sont perdues, de nombreux `fork` peuvent éventuellement ralentir le système d'exploitation.
+**Désavantages du snapshoting**: si un crash survient entre deux snapshots les données sont perdues, de nombreux `fork` peuvent éventuellement ralentir le système d'exploitation.
 
 **Avantages des fichiers AOF**:  les sauvegardes peuvent à priori être effectuées beaucoup plus régulièrement (voir la configuration des appels à `fsync') sans trop impacter la performance, peu de risque de corruption du fichier (on se contente de logger les informations les unes à la suite des autres, sans modifier ce qui précède).
 
@@ -363,7 +362,7 @@ Une autre façon d'assurer la persistence des données sous Redis est la **répl
 
 La réplication sous Redis fonctionne en mode maître-esclave: un serveur maître contient une base de données, et les serveurs esclaves sont configurés de façon à répliquer exactement les données du serveur maître.
 
-Nous vous demandons ici de travailler avec un binôme: vous jouerez le rôle du maître et votre camarade celui du serveur esclave (ou l'inverse).
+Nous vous demandons ici de travailler avec un binôme: vous jouerez le rôle du serveur maître et votre camarade celui du serveur esclave (ou l'inverse).
 
 Les étapes à suivre sont les suivantes:
 
