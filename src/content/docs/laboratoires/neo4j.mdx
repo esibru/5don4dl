@@ -1,5 +1,5 @@
 ---
-title: Introduction à Neo4J (base de données orientées graphes)
+title: Introduction à Neo4J (base de données orientée graphes)
 description: Description du premier laboratoire
 ---
 import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
@@ -20,7 +20,7 @@ On remarque sur cette image que:
 
 3. Les relations possèdent un certain **type**, qui représentent la façon dont les concepts sont reliés  (ACTED_IN, DIRECTED).
 
-4. Les liens et les sommets possèdent des attributs. 
+4. Les liens et les sommets possèdent des attributs (le nom et la date de naissance dans le cas d'une personne).
 
 Comme vous l'avez certainement compris, le graphe ci-dessus modélise des données cinématographiques (des films et des personnes liées à ces films).
 
@@ -42,13 +42,14 @@ Contrairement à ce que l'on pourrait penser, il est parfaitement possible de re
 - deux villes sont reliées par une arc s'il existe un tronçon d'autoroute reliant directement ces deux villes. Chaque tronçon possède une ville de départ et une ville d'arrivée. On souhaite stocker la longueur du tronçon (en kilomètres).
 
 1. Fournissez un schéma relationnel modélisant le graphe ci-dessus (prenez simplement une relation pour les villes et une autre pour les tronçons).
+**Soyez précis !** Nous vous demandons un schéma relationnel complet, comprenant les noms des relations, les différents attributs, les clés primaires et cles étrangères, les autres contraintes éventuelles.
 
 2. Fournir une requête SQL permettant d'obtenir les villes qu'il est possible d'atteindre au départ de Bruxelles en utilisant un (seul) tronçon d'autoroute.
 
 3. Que devient la requête SQL ci-dessus si on remplace un tronçon par deux tronçons ? Trois tronçons ? Un nombre quelconque de tronçons ?
 </Card>
 
-Comme vous avez pu le constater ci-dessus, les requêtes SQL nécessaire pour parcourir le graphe deviennent vite longue et fastidieuse. L'utilisation d'un SGBD dédié à la manipulation des graphes prend alors ici tout son intérêt.
+Comme vous avez pu le constater ci-dessus, les requêtes SQL nécessaires pour parcourir le graphe deviennent vite longue et fastidieuse. L'utilisation d'un SGBD dédié à la manipulation des graphes prend alors ici tout son intérêt.
 
 ## 3) Neo4j
 
