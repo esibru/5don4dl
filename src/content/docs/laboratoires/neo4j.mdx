@@ -54,4 +54,14 @@ Comme vous avez pu le constater ci-dessus, les requêtes SQL nécessaire pour pa
 
 Le système de base de données **Neo4j** est spécialement conçu pour représenter et exploiter des donnes sous forme de graphe. On communique avec celui-ci au moyen d'un langage particulier que nous allons apprendre à utiliser: **Cypher**.
 
+La documentation officielle de Neo4j est disponible ici: (https://neo4j.com/)
+
+Nous vous proposons à nouveau ici d'installer Neo4j via une image docker, mais n'hésitez pas à suivre les étapes d'installation spécifiques à votre système d'exploitation si vous le souhaitez.
+
+La commande Docker à utiliser est (remplacez évidemment le nom de user `g12345` par le vôtre et le mot de passe `myPassword` par un mot de passe de votre choix):
+
+``` bash showLineNumbers=false
+docker run --name MyNeo4j -p7474:7474 -p7687:7687 -d -e NEO4J_AUTH=g12345/myPassword neo4j:5
+```
+
 
