@@ -64,4 +64,22 @@ La commande Docker à utiliser est (remplacez évidemment le nom de user `g12345
 docker run --name MyNeo4j -p7474:7474 -p7687:7687 -d -e NEO4J_AUTH=g12345/myPassword neo4j:5
 ```
 
+Utilisez un autre nom de conteneur que MyNeo4j si vous le désirez. L'option:
+
+``` bash showLineNumbers=false
+-p7474:7474 -p7687:7687
+```
+
+permet d'exposer les ports 7474 (pour accéder à l'interface web d'administration de Neo4j via votre navigateur) et 7687 (pour l'envoi de commandes au serveur via le protocole Bolt, un protocole spécifique à Neo4j).
+
+Pensez à vérifier que le conteneur est bien actif (`docker ps -a`) et allez consulter les logs en cas de problème éventuel (`docker logs MyNeo4j`). Utilisez les commandes docker habituelles pour lancer/stoper/supprimer le conteneur.
+
+Vous devriez à présent avoir accès à l'interface web via:
+
+(http://localhost:7474/)
+
+Connectez vous (au moyen du user/mot de passe fournis ci-dessus) et vérifiez que tout est bien en place.
+
+
+
 
