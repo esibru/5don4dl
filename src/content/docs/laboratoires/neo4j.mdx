@@ -10,7 +10,7 @@ Nous vous proposons ici une introduction aux système de base de données orient
 
 L'image suivante représente un exemple de graphe comprenant trois sommets:
 
-![image](graph.png)
+![image](images/graph.png)
 
 On remarque sur cette image que:
 
@@ -54,14 +54,14 @@ Comme vous avez pu le constater ci-dessus, les requêtes SQL nécessaire pour pa
 
 Le système de base de données **Neo4j** est spécialement conçu pour représenter et exploiter des donnes sous forme de graphe. On communique avec celui-ci au moyen d'un langage particulier que nous allons apprendre à utiliser: **Cypher**.
 
-La documentation officielle de Neo4j est disponible ici: (https://neo4j.com/)
+La documentation officielle de Neo4j est disponible ici: https://neo4j.com/
 
 Nous vous proposons à nouveau ici d'installer Neo4j via une image docker, mais n'hésitez pas à suivre les étapes d'installation spécifiques à votre système d'exploitation si vous le souhaitez.
 
-La commande Docker à utiliser est (remplacez évidemment le nom de user `g12345` par le vôtre et le mot de passe `myPassword` par un mot de passe de votre choix):
+La commande Docker à utiliser est (remplacez le mot de passe `myPassword` par un mot de passe de votre choix):
 
 ``` bash showLineNumbers=false
-docker run --name MyNeo4j -p7474:7474 -p7687:7687 -d -e NEO4J_AUTH=g12345/myPassword neo4j:5
+docker run --name MyNeo4j -p7474:7474 -p7687:7687 -d -e NEO4J_AUTH=neo4j/myPassword neo4j:5
 ```
 
 Utilisez un autre nom de conteneur que MyNeo4j si vous le désirez. L'option:
@@ -76,9 +76,11 @@ Pensez à vérifier que le conteneur est bien actif (`docker ps -a`) et allez co
 
 Vous devriez à présent avoir accès à l'interface web via:
 
-(http://localhost:7474/)
+http://localhost:7474/
 
-Connectez vous (au moyen du user/mot de passe fournis ci-dessus) et vérifiez que tout est bien en place.
+Connectez vous (au moyen du user/mot de passe fournis ci-dessus) et vérifiez que tout est bien en place. Vous devriez obtenir sur le côté gauche des informations sur le nombre de sommets (noeuds) et d'arcs (relations) de votre base de donées, soit zéro pour le moment (votre base de données est vide):
+
+![image](images/exNeo4j.png)
 
 
 
