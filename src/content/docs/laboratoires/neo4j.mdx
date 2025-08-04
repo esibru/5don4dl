@@ -133,6 +133,10 @@ Ajoutez les tronçons d'autoroute suivants:
 
 Voyons maintenant comment interroger le graphe de façon à récupérer certaines données. Si on souhaite par exemple savoir quelles sont les villes reliées à Bruxelles (id = 1) par un tronçon d'autoroute, nous pouvons écrire:
 
+``` bash showLineNumbers=false
+neo4j$ MATCH (c1:City{id:1})-[:HIGHWAY]->(dest) RETURN dest.name, dest.country
+```
+
 ![image](images/matchExampleNeo4j.png)
 
 Le résultat de la requête s'affiche en dessous. Remarquez la clause RETURN précisant les données à renvoyer.
