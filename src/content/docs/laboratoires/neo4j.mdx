@@ -99,5 +99,11 @@ Vous voyez alors les deux noeuds de votre graphe dans l'interface de Neo4j:
 
 ![image](images/nodeNeo4j.png)
 
+Pour ajouter un arc entre ces deux villes, la requête CREATE peut également être utilisée. Cependant, il faut d'abord demander à Neo4j d'aller chercher les noeuds en question (au moyen d'une requête MATCH) et de créez deux variables permettant de faire références aux noeuds en question dans le CREATE. 
+
+La requête à utiliser est donc la suivante (c1 et c2 sont les noms des variables mentionnées ci-dessus):
+
+![image](images/relationshipCreateCypher.png)
+
 
 
