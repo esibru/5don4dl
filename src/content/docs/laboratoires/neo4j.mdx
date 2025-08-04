@@ -91,7 +91,10 @@ Nous allons à présent apprendre à ajouter des noeuds (sommets) et des relatio
 
 Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles, le pays la Belgique et l'id est 1, utilisez la requête **CREATE** de la sorte:
 
-![image](images/bxlCreateCypher.png)
+``` bash showLineNumbers=false
+neo4j$ CREATE (:City{id:1,name:'Bruxelles',country:'Belgique'})
+```
+
 
 Exécutez cette requête. Exécutez une requête similaire pour la création de la ville de Mons (Belgique) au sein du graphe.
 
@@ -103,7 +106,10 @@ Pour ajouter un arc entre ces deux villes, la requête CREATE peut également ê
 
 La requête à utiliser pour ajouter une autoroute de longueur 70 de Bruxelles à Mons est donc la suivante (c1 et c2 sont les noms des variables mentionnées ci-dessus):
 
-![image](images/relationshipCreateCypher.png)
+``` bash showLineNumbers=false
+neo4j$ MATCH (c1:City{id:1}), (c2:City{id:2}) CREATE (c1) - [:HIGHWAY{distance:70}]->(c2)
+```
+
 
 Remarquez le nom de la relation (HIGHWAY) et le sens de celle-ci (précisée par la flèche c1 -> c2). Les variables c1 et c2, définies par la requête MATCH, peuvent-être utilisées dans toute la suite (ici, le CREATE).
 La relation apparaît alors dans l'interface de Neo4j:
