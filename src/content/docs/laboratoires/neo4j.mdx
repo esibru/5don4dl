@@ -35,9 +35,9 @@ Fournissez deux exemples supplémentaires d'application où les graphes apparais
 Contrairement à ce que l'on pourrait penser, il est parfaitement possible de représenter un graphe au sein du modèle relationnel (standard) de données. L'exercice suivant vous montre comment.
 
 <Card title="Graphe et modèle relationnel" icon="pencil">
- Nous souhaiterions modéliser les données du réseau d'autoroute de la Belgique sous la forme d'un graphe:
+ Nous souhaiterions modéliser les données du réseau d'autoroute de l'Europe sous la forme d'un graphe:
 
-- chaque sommet du graphe représente une ville. On ne souhaite stocker que le nom de la ville ainsi qu'un numéro d'identification pour chaque ville.
+- chaque sommet du graphe représente une ville. On souhaite stocker, le nom de la ville, le pays auquel elle appartient, ainsi qu'un numéro d'identification pour chaque ville.
 
 - deux villes sont reliées par une arc s'il existe un tronçon d'autoroute reliant directement ces deux villes. Chaque tronçon possède une ville de départ et une ville d'arrivée. On souhaite stocker la longueur du tronçon (en kilomètres).
 
@@ -89,7 +89,7 @@ Nous allons à présent apprendre à ajouter des noeuds (sommets) et des relatio
 
 ![image](images/neo4jCypher.png)
 
-Reprenons notre graphe modélisant le réseau autoroutier de la Belgique. Pour créer un noeud dont le nom est Bruxelles et l'id est 1, utilisez la requête **CREATE** de la sorte:
+Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles et l'id est 1, utilisez la requête **CREATE** de la sorte:
 
 ![image](images/bxlCreateCypher.png)
 
@@ -112,3 +112,15 @@ La relation apparaît alors dans l'interface de Neo4j:
 ![image](images/relationsNeo4j.png)
 
 
+<Card title="Cypher" icon="pencil">
+Ajoutes les villes suivantes à votre graphe: Valenciennes (France), Lilles (France), Courtrai (Belgique), Gand (Belgique), Calais(France).
+Ajoutez les tronçons d'autoroute suivants:
+
+- Mons->Valencienne (45 km),
+
+- Courtrai->Lille (35 km), 
+
+- Gand->Courtrai (30 km),
+
+- Gand->Calais (75 km).
+</Card>
