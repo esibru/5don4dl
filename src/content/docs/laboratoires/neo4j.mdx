@@ -89,11 +89,11 @@ Nous allons à présent apprendre à ajouter des noeuds (sommets) et des relatio
 
 ![image](images/neo4jCypher.png)
 
-Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles et l'id est 1, utilisez la requête **CREATE** de la sorte:
+Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles, le pays la Belgique et l'id est 1, utilisez la requête **CREATE** de la sorte:
 
 ![image](images/bxlCreateCypher.png)
 
-Exécutez cette requête. Exécutez une requête similaire pour la création de la ville de Mons au sein du graphe.
+Exécutez cette requête. Exécutez une requête similaire pour la création de la ville de Mons (Belgique) au sein du graphe.
 
 Vous voyez alors les deux noeuds de votre graphe dans l'interface de Neo4j:
 
@@ -124,3 +124,9 @@ Ajoutez les tronçons d'autoroute suivants:
 
 - Gand->Calais (75 km).
 </Card>
+
+Voyons maintenant comment interroger le graphe de façon à récupérer certaines données. Si on souhaite par exemple savoir quelles sont les villes reliées à Bruxelles (id = 1) par un tronçon d'autoroute, nous pouvons écrire:
+
+![image](images/matchExampleNeo4j.png)
+
+Le résultat de la requête s'affiche en dessous. Remarquez la clause RETURN précisant les données à renvoyer.
