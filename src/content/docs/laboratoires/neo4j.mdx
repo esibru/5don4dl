@@ -85,9 +85,11 @@ Connectez vous (au moyen du user/mot de passe fournis ci-dessus) et vérifiez qu
 
 ## 4) Cypher
 
-Nous allons à présent apprendre à ajouter des noeuds (sommets) et des relations (arcs) à notre graphe au moyen du langage Cypher. Pour ce faire, utilisez simplement la zone de texte située au dessus de l'interface web:
+Nous allons tout d'abord apprendre à ajouter des noeuds (sommets) et des relations (arcs) à notre graphe au moyen du langage Cypher. Pour ce faire, utilisez simplement la zone de texte située au dessus de l'interface web:
 
 ![image](images/neo4jCypher.png)
+
+### Créer un noeud
 
 Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles, le pays la Belgique et l'id est 1, utilisez la requête **CREATE** de la sorte:
 
@@ -95,12 +97,14 @@ Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer
 neo4j$ CREATE (:City{id:1,name:'Bruxelles',country:'Belgique'})
 ```
 
-
 Exécutez cette requête. Exécutez une requête similaire pour la création de la ville de Mons (Belgique) au sein du graphe.
 
 Vous voyez alors les deux noeuds de votre graphe dans l'interface de Neo4j:
 
 ![image](images/nodeNeo4j.png)
+
+
+### Créer un lien entre les noeuds
 
 Pour ajouter un arc entre ces deux villes, la requête CREATE peut également être utilisée. Cependant, il faut d'abord demander à Neo4j d'aller chercher les noeuds en question (au moyen d'une requête MATCH) et de créez deux variables permettant de faire références aux noeuds en question dans le CREATE. 
 
@@ -110,16 +114,15 @@ La requête à utiliser pour ajouter une autoroute de longueur 70 de Bruxelles �
 neo4j$ MATCH (c1:City{id:1}), (c2:City{id:2}) CREATE (c1) - [:HIGHWAY{distance:70}]->(c2)
 ```
 
-
 Remarquez le nom de la relation (HIGHWAY) et le sens de celle-ci (précisée par la flèche c1 -> c2). Les variables c1 et c2, définies par la requête MATCH, peuvent-être utilisées dans toute la suite (ici, le CREATE).
 La relation apparaît alors dans l'interface de Neo4j:
 
 
 ![image](images/relationsNeo4j.png)
 
-
 <Card title="Cypher" icon="pencil">
-Ajoutes les villes suivantes à votre graphe: Valenciennes (France), Lilles (France), Courtrai (Belgique), Gand (Belgique), Calais(France).
+Ajoutes les villes suivantes à votre graphe: Valenciennes (France), Lilles (France), Courtrai (Belgique), Gand (Belgique), Calais(France), Paris (France), Dublin(Irlande).
+
 Ajoutez les tronçons d'autoroute suivants:
 
 - Mons->Valencienne (45 km),
@@ -128,8 +131,12 @@ Ajoutez les tronçons d'autoroute suivants:
 
 - Gand->Courtrai (30 km),
 
-- Gand->Calais (75 km).
+- Gand->Calais (75 km),
+
+- Valencienne->Paris (180 km).
 </Card>
+
+### Interroger la base de données
 
 Voyons maintenant comment interroger le graphe de façon à récupérer certaines données. Si on souhaite par exemple savoir quelles sont les villes reliées à Bruxelles (id = 1) par un tronçon d'autoroute, nous pouvons écrire:
 
@@ -144,7 +151,7 @@ Le résultat de la requête s'affiche en dessous. Remarquez la clause RETURN pr�
 Cypher permet de résoudre très simplement un des problèmes posés par la modélisation relationnelle d'un graphe: le parcours. Par exemple, pour obtenir des informations sur toutes les villes atteignable à partir de Bruxelles:
 
 ``` bash showLineNumbers=false
-neo4j$ MATCH (start:city {id: 1})-[:HIGHWAY*1..]->(ville)
+neo4j$ MATCH (start:City {id: 1})-[:HIGHWAY*1..]->(ville)
 RETURN DISTINCT ville.name, ville.country;
 ```
 
