@@ -91,9 +91,15 @@ Nous nous limiterons donc à travailler sur la base de données par défaut neo4
 
 ## 4) Cypher
 
-Nous allons tout d'abord apprendre à ajouter des noeuds (sommets) et des relations (arcs) à notre graphe au moyen du langage Cypher. Pour ce faire, utilisez simplement la zone de texte située au dessus de l'interface web:
+Nous allons tout d'abord apprendre à ajouter des noeuds (sommets) et des relations (arcs) à notre graphe au moyen du langage Cypher. Pour ce faire, le plus simple est d'utiliser la zone de texte située au dessus de l'interface web:
 
 ![image](images/neo4jCypher.png)
+
+Mais il est aussi possible de se connecter à Neo4j en ligne de commande:
+
+``` bash showLineNumbers=false
+docker exec -it MyNeo4j cypher-shell -u neo4j -p votre_mot_de_passe
+```
 
 ### Créer un noeud
 
@@ -179,7 +185,9 @@ Utilisez la documentation officielle Neo4j pour déterminer les commandes à uti
 
 - supprimer la ville `Dublin` de votre graphe,
 
-- afficher (sans doublon !) la liste des différents pays présents dans votre base de données (voyez l'utilisation de la sous-clause `WHERE` de la clause `MATCH`).
+- afficher (sans doublon !) la liste des différents pays présents dans votre base de données (voyez l'utilisation de la sous-clause `WHERE` de la clause `MATCH`),
+
+- afficher le nombre total de noeuds présents (voyez l'utilisation de la fonction `COUNT`).
 
 </Card>
 
