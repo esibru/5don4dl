@@ -140,3 +140,36 @@ neo4j$ MATCH (c1:City{id:1})-[:HIGHWAY]->(dest) RETURN dest.name, dest.country
 ![image](images/matchExampleNeo4j.png)
 
 Le résultat de la requête s'affiche en dessous. Remarquez la clause RETURN précisant les données à renvoyer.
+
+Cypher permet de résoudre très simplement un des problèmes posés par la modélisation relationnelle d'un graphe: le parcours. Par exemple, pour obtenir des informations sur toutes les villes atteignable à partir de Bruxelles:
+
+``` bash showLineNumbers=false
+neo4j$ MATCH (start:city {id: 1})-[:HIGHWAY*1..]->(ville)
+RETURN DISTINCT ville.name, ville.country;
+```
+
+Remarquez la syntaxe:
+
+``` bash showLineNumbers=false
+[:HIGHWAY*1..]->(ville)
+```
+qui permet d'obtenir toutes les villes atteignables à partir d'un ou plusieurs liens (`*1..`) de type `HIGHWAY`.
+
+<Card title="Parcours de graphes" icon="pencil">
+Adaptez la requête Cypher ci-dessus pour obtenir uniquement les villes atteignables au départ de Bruxelles au moyen d'au plus deux tronçons d'autoroutes. Exécutez cette requête et vérifiez son bon fonctionnement.
+</Card>
+
+## 5) Client Java
+
+De même que pour Redis, accéder à Neo4j à partir d'un code Java est très simple. Ajoutez simplement les lignes suivant dans votre pom.xml:
+
+
+<Card title="Driver Neo4j" icon="seti:maven">
+``` xml showLineNumbers=false
+<dependency>
+    <groupId>org.neo4j.driver</groupId>
+    <artifactId>neo4j-java-driver</artifactId>
+    <version>5.28.8</version>
+</dependency>
+```
+</Card>
