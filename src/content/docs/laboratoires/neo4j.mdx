@@ -91,7 +91,7 @@ Nous allons tout d'abord apprendre à ajouter des noeuds (sommets) et des relati
 
 ### Créer un noeud
 
-Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le nom est Bruxelles, le pays la Belgique et l'id est 1, utilisez la requête **CREATE** de la sorte:
+Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le type est 'City' et ayant comme attributs un nom ('Bruxelles'), un pays (la Belgique) et un id (1), utilisez la requête **CREATE** de la sorte:
 
 ``` bash showLineNumbers=false
 neo4j$ CREATE (:City{id:1,name:'Bruxelles',country:'Belgique'})
@@ -166,7 +166,7 @@ qui permet d'obtenir toutes les villes atteignables à partir d'un ou plusieurs 
 Adaptez la requête Cypher ci-dessus pour obtenir uniquement les villes atteignables au départ de Bruxelles au moyen d'au plus deux tronçons d'autoroutes. Exécutez cette requête et vérifiez son bon fonctionnement.
 </Card>
 
-## 5) Client Java
+## 5) Driver Java
 
 De même que pour Redis, accéder à Neo4j à partir d'un code Java est très simple. Ajoutez simplement les lignes suivant dans votre pom.xml:
 
@@ -180,3 +180,44 @@ De même que pour Redis, accéder à Neo4j à partir d'un code Java est très si
 </dependency>
 ```
 </Card>
+
+Le canevas suivant permet d'exécuter une requête Cypher et d'importer le résultat dans votre code:
+
+```java
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.EagerResult;
+import org.neo4j.driver.Record;
+import org.neo4j.driver.GraphDatabase;
+
+import java.util.List;
+
+public class testNeo {
+    public static void main(String[] args) {
+        final String dbUri = "neo4j://localhost";
+        final String dbUser = "neo4j";
+        final String dbPassword = "votre-mot-de-passe";
+
+        try (var driver = GraphDatabase.driver(dbUri, AuthTokens.basic(dbUser, dbPassword))) {
+            driver.verifyConnectivity();
+
+            EagerResult result = driver.executableQuery("""
+                LA REQUETE
+                CYPHER
+	        A EXECUTER
+                """).execute();
+
+            List<Record> records = result.records();
+
+            records.forEach(r -> {
+                System.out.println(r.get("ATTRIBUT-SOUHAITE"));
+            });
+        }
+    }
+```
+
+N'hésitez pas à consulter la documentation officielle de Neo4j pour plus de détails sur la façon d'utiliser le driver Java.
+
+<Card title="Application utilisant Neo4j" icon="pencil">
+Ecrire une application Java demandant un nom de ville à l'utilisateur et affichant à l'écran toutes les villes qui lui sont reliées par un tronçon d'autoroute.
+</Card>
+
