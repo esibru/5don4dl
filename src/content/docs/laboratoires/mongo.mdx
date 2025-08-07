@@ -1,0 +1,18 @@
+---
+title: Introduction à MongoDB (base de données orientée document)
+---
+import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+
+## 1) Introduction
+
+Comme expliqué en 2DON1, les bases de données orientées document permettent de stocker les données sous la forme d'un document d'un format donné. Ce format est généralement soit du JSON soit de l'XML.
+
+Nous vous proposons ici une introduction à MongoDB, un SGBD orienté document axé sur le JSON.
+
+Le JSON est naturellement présent dans le code JavaScript des applications web, ce qui facilite (dans beaucoup de cas) l'implémentation de la persistance des données d'une telle application: il n'est plus nécessaire d'écrire du code pour faire correspondre les données JSON et la structure d'une base de données relationnelle normalisée.
+
+Ceci est un cas particulier du problème plus général, évoqué en 2DON1 et présent en informatique depuis (au moins) les années 1990: la différence de paradigmes entre modèle relationnel (d'une part) et programmation orientée objet (d'autre part). Comment faire correspondre le plus rapidement possible les données des objets de notre application avec celles de la base de données ?
+
+Dans le cas où les données de l'application sont encodées en JSON, un système comme MongoDB apporte une solution à ce problème.
+
+## 2) MongoDB
