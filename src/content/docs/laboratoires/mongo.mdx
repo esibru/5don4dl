@@ -16,3 +16,11 @@ Ceci est un cas particulier du problème plus général, évoqué en 2DON1 et pr
 Dans le cas où les données de l'application sont encodées en JSON, un système comme MongoDB apporte une solution à ce problème.
 
 ## 2) MongoDB
+
+La documentation officielle de MongoDb est disponible ici: https://www.mongodb.com/ 
+
+Nous vous propons à nouveau une installation via Docker. La commande à utiliser est similaire à celles utilisés pour Redis/Neo4j (nous utilisons cette fois le port 27017, standard pour la communication avec le serveur MongoDB):
+
+``` bash showLineNumbers=false
+docker run --name MyMongoDB -d -p 27017:27017 mongo
+```
