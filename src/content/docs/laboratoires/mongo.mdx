@@ -19,8 +19,40 @@ Dans le cas où les données de l'application sont encodées en JSON, un systèm
 
 La documentation officielle de MongoDb est disponible ici: https://www.mongodb.com/ 
 
+**Attention**: MongoDB est disponible en plusieurs versions, dont une version cloud nommée 'Atlas'. Cette dernière est fort mise en avant dans la documentation, nous ne nous en préoccuperons pas et utiliserons simplement la version 'Community' (gratuite).
+
 Nous vous propons à nouveau une installation via Docker. La commande à utiliser est similaire à celles utilisés pour Redis/Neo4j (nous utilisons cette fois le port 27017, standard pour la communication avec le serveur MongoDB):
 
 ``` bash showLineNumbers=false
 docker run --name MyMongoDB -d -p 27017:27017 mongo
+```
+
+Comme auparavant, ayez à l'esprit les commandes de base de docker pour gérer le conteneur (`docker ps`, `docker logs`, `docker start`, `docker stop`).
+
+Connectez-vous à la ligne de commande (shell) du serveur MongoDB:
+
+``` bash showLineNumbers=false
+docker exec -it MyMongoDB mongosh
+```
+
+### Gestion des bases de données sous MongoDB
+
+MongoDB vous permet de créer plusieurs bases de données distinctes. Pour voir les bases de données disponibles, tapez:
+
+``` bash showLineNumbers=false
+show dbs
+```
+
+Vous voyez apparaître plusieurs bases de données crées automatiquement par MongoDB lors de l'installation (`admin`, `config`, `local`), nous n'y toucherons pas pour le moment.
+
+La commande `use` permet de se connecter à une base de données existante. Si le nom fournit ne correspond pas à une base de donnée existante, elle est créée. Créez votre base de données en tapant:
+
+``` bash showLineNumbers=false
+use MyDB
+```
+
+Pour voir la base de données à laquelle vous êtes connecté, tapez simplement:
+
+``` bash showLineNumbers=false
+db
 ```
