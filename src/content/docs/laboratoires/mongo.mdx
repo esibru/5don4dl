@@ -77,11 +77,26 @@ db.myNewCollection1.insertOne({<données JSON>})
 Par exemple:
 
 ``` bash showLineNumbers=false
-db.clients.insertOne({id: 34, name: "Louis"})
+db.clients.insertOne({name: "Louis", age: 34})
 ```
 
-insère un nouveau clien d'identifiant 34 et de nom Louis dans la collections `clients` (celle-ci est créée si elle n'existe pas déjà).
+insère un nouveau client de nom Louis et d'âge 34 dans la collections `clients` (celle-ci est créée si elle n'existe pas déjà). Pour lister les clients existants:
 
+``` bash showLineNumbers=false
+db.clients.find()
+```
 
+Remarquez que MongoDB assigne automatiquement un identifiant à chaque nouveau document.
+
+<Card title="MongoDB" icon="pencil"> 
+Lancer mongosh et créez une nouvelle base de données (si ce n'est déjà fait). Ajoutez quelques clients dans la collection `clients`. Ajoutez plusieurs clients ayant 30 ans.
+
+Utilisez à présent la documentation officielle MongoDB pour:
+
+- afficher tous les clients ayant 30 ans (a vous de voir quelle commande utiliser).
+
+- supprimer tous les clients ayant 30 ans, et uniquement ceux là (a vous de voir quelle commande utiliser).
+
+</Card>
 
 
