@@ -31,7 +31,7 @@ docker run --name MyMongoDB -d -p 27017:27017 mongo
 
 Comme auparavant, ayez à l'esprit les commandes de base de docker pour gérer le conteneur (`docker ps`, `docker logs`, `docker start`, `docker stop`).
 
-Connectez-vous à la ligne de commande (shell) du serveur MongoDB:
+Connectez-vous à **mongosh**, la ligne de commande (shell) du serveur MongoDB:
 
 ``` bash showLineNumbers=false
 docker exec -it MyMongoDB mongosh
@@ -67,3 +67,21 @@ Par rapport à une base de donnée relationnelle standard, la documentation offi
 
 - une collection (MongoDB) = une table (SGBD relationnel),
 - un document JSON (MongoDB) = une ligne de données (SGBD relationnel).
+
+MongoDB crée automatiquement une nouvelle collection lorsqu'on stocke une donnée dedans pour la première fois. Pour stocker une telle donnée, utilisez la commande:
+
+``` bash showLineNumbers=false
+db.myNewCollection1.insertOne({<données JSON>})
+```
+
+Par exemple:
+
+``` bash showLineNumbers=false
+db.clients.insertOne({id: 34, name: "Louis"})
+```
+
+insère un nouveau clien d'identifiant 34 et de nom Louis dans la collections `clients` (celle-ci est créée si elle n'existe pas déjà).
+
+
+
+
