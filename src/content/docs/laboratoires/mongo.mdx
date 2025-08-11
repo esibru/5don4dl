@@ -70,6 +70,15 @@ Par rapport à une base de donnée relationnelle standard, la documentation offi
 - une collection (MongoDB) = une table (SGBD relationnel),
 - un document JSON (MongoDB) = une ligne de données (SGBD relationnel).
 
+Attention, cependant:
+
+<Aside type="caution" title="Une collection n'impose pas de contraintes !">
+
+Par défaut, MongoDB n'impose aucune contrainte sur les documents d'un schéma. Les documents JSON insérés dans la collection ne doivent pas nécessairement posséder les mêmes clés. Nous verront plus loin comment demander à MongoDB de spécifier un schéma pour les données d'une collection.
+
+</Aside>
+
+
 MongoDB crée automatiquement une nouvelle collection lorsqu'on stocke une donnée dedans pour la première fois. Pour stocker une telle donnée, utilisez la commande:
 
 ``` bash showLineNumbers=false
@@ -101,7 +110,9 @@ Utilisez à présent la documentation officielle MongoDB pour:
 
 </Card>
 
-## 4) BSON et JSON
+
+
+## 4) BSON, JSON et la validation de schéma
 
 Sous MongoDB, les documents sont stockés en interne dans un format binaire spécifique appelé le **BSON** (acronyme de Binary jSON), que l'on peut voir comme une représentation binaire du JSON.
 
@@ -129,3 +140,22 @@ Lorsqu'on affiche les données de ce client, MongoDB répond:
 
 ce qui signifie que MongoDB a créé un nouveau champ de type `ISODate` pour la clé `bdate`. Remarquez aussi que les identifiants générés automatiquement par MongoDB sont de type `ObjectId`.
 
+Consultez la documentation officielle de MongoDB pour avoir un aperçu détaillé des types de données proposés.
+
+Nous sommes en présent en mesure d'imposer un schéma pour une collection données. Nous voudrions par exemple imposer que chaque document de la collection `clients` possède:
+
+- une clé `nom`, de type string,
+- une clé `bdate`, de type date.
+
+Pour cela, nous allons créer la collection clients en utilisant le canevas suivant:
+
+``` bash showLineNumbers=false
+db.createCollection("clients", spécifications-des-contraintes)
+```
+
+<Card title="Spécifier un schéma sous MongoDB" icon="pencil"> 
+Utilisez la documentation officielle de MongoDB (constultez simplement la page appelée "Specify JSON Schema Validation") pour définir le schéma précisé ci-dessus pour la collection `clients`.
+Vérifiez que MongoDB n'accepte l'insertion d'un nouveau client dans cette collection que si les clés nom et bdate sont présentes (avec le bon type de donnée).
+
+
+</Card>
