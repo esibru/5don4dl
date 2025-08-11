@@ -111,9 +111,21 @@ Les avantages à utiliser un tel format sont, notamment, de:
 
 - ajouter des métadonnées lors du stockage, comme la taille du document ou le type de données des valeurs. Ceci permet à MongoDB de parser les documents JSON plus rapidement.
 
+Pour utiliser le type de donnée date, par exemple, il suffit d'écrire:
 
+``` bash showLineNumbers=false
+db.clients.insertOne({ name: "Charlot", bdate : new Date("2000-01-03") }) 
+```
 
+Lorsqu'on affiche les données de ce client, MongoDB répond:
 
+``` bash showLineNumbers=false
+{
+    _id: ObjectId('6899b47648f97bd1ac89b045'),
+    name: 'Charlot',
+    bdate: ISODate('2000-01-03T00:00:00.000Z')
+}
+```
 
-
+ce qui signifie que MongoDB a créé un nouveau champ de type `ISODate` pour la clé `bdate`. Remarquez aussi que les identifiants générés automatiquement par MongoDB sont de type `ObjectId`.
 
