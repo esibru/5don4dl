@@ -107,11 +107,11 @@ Sous MongoDB, les documents sont stockés en interne dans un format binaire spé
 
 Les avantages à utiliser un tel format sont, notamment, de:
 
-- proposer une plue grande variété de types de données, par exemple le type `Date` (non supporté par le JSON standard, les dates sont encodées comme des `String` en JSON),
+- proposer une plue grande variété de types de données, par exemple des dates (non supporté par le JSON standard, les dates sont encodées comme des string en JSON),
 
 - ajouter des métadonnées lors du stockage, comme la taille du document ou le type de données des valeurs. Ceci permet à MongoDB de parser les documents JSON plus rapidement.
 
-Pour utiliser le type de donnée date, par exemple, il suffit d'écrire:
+Pour utiliser des dates, par exemple, il suffit d'écrire:
 
 ``` bash showLineNumbers=false
 db.clients.insertOne({ name: "Charlot", bdate : new Date("2000-01-03") }) 
