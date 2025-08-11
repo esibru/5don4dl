@@ -78,12 +78,21 @@ Par défaut, MongoDB n'impose aucune contrainte sur les documents d'un schéma. 
 
 </Aside>
 
+### Créer une collection ou un document
 
 MongoDB crée automatiquement une nouvelle collection lorsqu'on stocke une donnée dedans pour la première fois. Pour stocker une telle donnée, utilisez la commande:
 
 ``` bash showLineNumbers=false
 db.myNewCollection1.insertOne({<données JSON>})
 ```
+
+Si on le souhaite, on peut aussi créer `myNewCollection1` explicitement (avant d'y insérer des documents):
+
+``` bash showLineNumbers=false
+db.createCollection("myNewCollection1")
+```
+
+Nous verrons (ci-dessous) que la méthode `createCollection` est utile lorsqu'on shoutaite configurer la collection.
 
 Par exemple:
 
@@ -97,7 +106,7 @@ insère un nouveau client de nom Louis et d'âge 34 dans la collections `clients
 db.clients.find()
 ```
 
-Remarquez que MongoDB assigne automatiquement un identifiant à chaque nouveau document.
+Remarquez que MongoDB assigne automatiquement un identifiant à chaque nouveau document (l'identifiant appartient possède un type de donnée particulier discuté ci-dessous).
 
 <Card title="MongoDB" icon="pencil"> 
 Lancer mongosh et créez une nouvelle base de données (si ce n'est déjà fait). Ajoutez quelques clients dans la collection `clients`. Ajoutez plusieurs clients ayant 30 ans.
@@ -109,7 +118,6 @@ Utilisez à présent la documentation officielle MongoDB pour:
 - supprimer tous les clients ayant 30 ans, et uniquement ceux là (a vous de voir quelle commande utiliser).
 
 </Card>
-
 
 
 ## 4) BSON, JSON et la validation de schéma
