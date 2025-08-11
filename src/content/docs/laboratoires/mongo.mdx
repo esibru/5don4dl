@@ -61,7 +61,9 @@ db
 
 ## 3) Documents et collections
 
-MongoDB permet donc de stocker des **documents**, c'est-à-dire des données au format JSON. Ces documents sont rassemblés au sein d'une **collection** (et chaque collection appartient à une base de données, créées comme expliqué à la section précédente).
+MongoDB permet donc de stocker des **documents**, c'est-à-dire des données au format JSON (En réalité, MongoDB ne stocke pas immédiatement les données en JSON mais plutôt dans un format proche appelé le **BSON**, nous en parlerons plus loin).
+
+Ces documents sont rassemblés au sein d'une **collection** (et chaque collection appartient à une base de données, créées comme expliqué à la section précédente).
 
 Par rapport à une base de donnée relationnelle standard, la documentation officielle MongoDB suggère l'analogie suivante:
 
@@ -98,5 +100,20 @@ Utilisez à présent la documentation officielle MongoDB pour:
 - supprimer tous les clients ayant 30 ans, et uniquement ceux là (a vous de voir quelle commande utiliser).
 
 </Card>
+
+## 4) BSON et JSON
+
+Sous MongoDB, les documents sont stockés en interne dans un format binaire spécifique appelé le **BSON** (acronyme de Binary jSON), que l'on peut voir comme une représentation binaire du JSON.
+
+Les avantages à utiliser un tel format sont, notamment, de:
+
+- proposer une plue grande variété de types de données, par exemple le type `Date` (non supporté par le JSON standard, les dates sont encodées comme des `String` en JSON),
+
+- ajouter des métadonnées lors du stockage, comme la taille du document ou le type de données des valeurs. Ceci permet à MongoDB de parser les documents JSON plus rapidement.
+
+
+
+
+
 
 
