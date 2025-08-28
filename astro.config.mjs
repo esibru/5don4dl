@@ -14,15 +14,28 @@ export default defineConfig({
           social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
           sidebar: [
               {
-                  label: 'Guides',
+                  label: 'Présentation',
                   items: [
-                      // Each item here is one entry in the navigation menu.
-                      { label: 'Guide du rédacteur', slug: 'guides/example' },
+                      { label: "Présentation de l'UE", slug: 'presentation/presentation' },
                   ],
               },
               {
                   label: 'laboratoires',
-                  autogenerate: { directory: 'laboratoires' },
+                  items: [
+                    { label: 'Labo 1 & 2 - Modèle clé-valeur', slug: 'laboratoires/redis'},
+                    { label: 'Labo 3 & 4- Modèle graph', slug: 'laboratoires/neo4j'},
+                    { label: 'Labo 5 & 6 - Modèle document', slug: 'laboratoires/mongodb'},
+                  ],
+              },
+              {
+                  label: 'Théorie',
+                  autogenerate: { directory: 'theorie' },
+              },
+                            {
+                  label: 'Guides',
+                  items: [
+                      { label: 'Guide du rédacteur', slug: 'guides/example' },
+                  ],
               },
           ],
       }),
