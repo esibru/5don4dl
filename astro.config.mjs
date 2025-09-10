@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sebdrobisz.github.io',
+  site: 'https://esibru.github.io',
   base: '/5don4dl/',
   integrations: [
       starlight({
