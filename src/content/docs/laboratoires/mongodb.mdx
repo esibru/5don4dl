@@ -205,7 +205,7 @@ try (MongoClient mongoClient = MongoClients.create(connectionString)) {
      // Création d'un nouveau document
      Document monEmploye = new Document("name", "Charlot")
                     .append("age", 39)
-		   .append("sexe", "M");
+                    .append("sexe", "M");
 
      // Insertion du document
      collection.insertOne(monEmploye);
@@ -215,7 +215,7 @@ try (MongoClient mongoClient = MongoClients.create(connectionString)) {
 }
 ```
 
-Remarque comme l'ajout de couples clé/valeur est simple et élégant. Attention cependant: si la collection utilisée pour l'insertion spécifie un schéma, les données insérées doivent satisfaire toutes les contraintes du schéma. Ceci peut donner lieu à des conversions entre les types de données MongoDB et les types de données Java. Dans l'exemple ci-dessus, nous nous sommes volontairement limités à des String/des entiers.
+Remarquez comme l'ajout de couples clé/valeur est simple et élégant. Attention cependant: si la collection utilisée pour l'insertion spécifie un schéma, les données insérées doivent satisfaire toutes les contraintes du schéma. Ceci peut en particulier donner lieu à des conversions entre les types de données MongoDB et les types de données Java. Dans l'exemple ci-dessus, nous nous sommes volontairement limités à des String/des entiers.
 
 <Card title="Application gérant des utilisateurs" icon="pencil"> 
 Ecrire une application Java demandant des données d'employe (nom, âge et sexe) à l'utilisateur et qui insère  ces données dans la collection employe du serveur MongoDB local.
