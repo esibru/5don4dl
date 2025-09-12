@@ -164,6 +164,59 @@ db.createCollection("clients", spécifications-des-contraintes)
 <Card title="Spécifier un schéma sous MongoDB" icon="pencil"> 
 Utilisez la documentation officielle de MongoDB (constultez simplement la page appelée "Specify JSON Schema Validation") pour définir le schéma précisé ci-dessus pour la collection `clients`.
 Vérifiez que MongoDB n'accepte l'insertion d'un nouveau client dans cette collection que si les clés nom et bdate sont présentes (avec le bon type de donnée).
+</Card>
+
+## 5) Client Java
+
+Se connecter à MongoDB via un code Java est à nouveau très simple. Ajoutez tout d'abord la dépendance suivante:
+ 
+<Card title="Driver MongoDB" icon="seti:maven">
+``` xml showLineNumbers=false
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongodb-driver-sync</artifactId>
+    <version>5.1.0</version>
+</dependency>
+```
+</Card>
+
+Après avoir importé les classes nécessaires ...
+
+```java
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+```
+
+... la manipulation des données se fait très facilement:
+
+```java
+String connectionString = "mongodb://localhost:27017";
+
+try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+     // Choix de la DB
+     MongoDatabase database = mongoClient.getDatabase("test");
+     // Choix de la collection (elle est créee si elle n'existe pas)
+     MongoCollection<Document> collection = database.getCollection("employe");
 
 
+     // Création d'un nouveau document
+     Document monEmploye = new Document("name", "Charlot")
+                    .append("age", 39)
+                    .append("sexe", "M");
+
+     // Insertion du document
+     collection.insertOne(monEmploye);
+
+} catch (Exception e) {
+    System.err.println("Erreur de connexion : " + e.getMessage());
+}
+```
+
+Remarquez comme l'ajout de couples clé/valeur est simple et élégant. Attention cependant: si la collection utilisée pour l'insertion spécifie un schéma, les données insérées doivent satisfaire toutes les contraintes du schéma. Ceci peut en particulier donner lieu à des conversions entre les types de données MongoDB et les types de données Java. Dans l'exemple ci-dessus, nous nous sommes volontairement limités à des String/des entiers.
+
+<Card title="Application gérant des utilisateurs" icon="pencil"> 
+Ecrire une application Java demandant des données d'employe (nom, âge et sexe) à l'utilisateur et qui insère  ces données dans la collection employe du serveur MongoDB local.
 </Card>
