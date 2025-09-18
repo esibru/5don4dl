@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: 5don4d-labos
+    working_dir: /app
+    volumes:
+      - .:/app                # Monte ton projet local
+      - /app/node_modules     # Garde node_modules dans le conteneur
+    ports:
+      - "4321:4321"           # Adapte si ton app utilise un autre port (ex: 3000)
+    command: npm run dev -- --host
