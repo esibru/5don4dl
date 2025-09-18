@@ -180,7 +180,7 @@ l'accès au serveur est très simple:
 ```java
 Jedis jedis = new Jedis("localhost", 6379);
 
-jedis.set("g12345" + i, Integer.toString(14));
+jedis.set("g12345", Integer.toString(14));
 
 if (jedis.exists("g23456")){
             // La clé g23456 existe
