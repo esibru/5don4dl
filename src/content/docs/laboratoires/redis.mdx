@@ -25,7 +25,7 @@ Redis n'est pas officiellement supporté sur Windows, nous vous proposons donc i
 <Steps>
 1. Pour débuter, tapez: 
    
-   ``` bash showLineNumbers=false
+   ``` bash showLineNumbers=false frame=none
    $ docker run --name MyRedis -p 6379:6379 -d redis
    ```
    
@@ -34,11 +34,11 @@ Redis n'est pas officiellement supporté sur Windows, nous vous proposons donc i
    L'option `-p 6379:6379` permet d'exposer le port 6379 (port standard auquel est connecté le serveur Redis) et le rediriger vers le port 6379 de la machine hôte. Ceci nous permettra (voir plus loin) de pouvoir communiquer avec ce serveur à partir d'une application externe.
 
 2. Pensez à vérifier que le conteneur est bien actif au moyen de la commande:
-   ``` bash showLineNumbers=false
+   ``` bash showLineNumbers=false frame=none
    $ docker ps -a
    ```
 3. Connectez-vous à présent au terminal du conteneur:
-   ``` bash showLineNumbers=false
+   ``` bash showLineNumbers=false frame=none
    $ docker exec -it MyRedis /bin/bash
    ```
 4. Vous êtes désormais prêt à utiliser Redis. 
@@ -47,7 +47,7 @@ Redis n'est pas officiellement supporté sur Windows, nous vous proposons donc i
 <Aside type="caution" title="La création de l'image Redis ne doit être exécutée qu'une seule fois">
 À l'avenir, pour stopper/lancer le conteneur `MyRedis`, utilisez:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ docker stop MyRedis
 $ ...
 $ docker start MyRedis
@@ -58,7 +58,7 @@ $ docker start MyRedis
 
 Pour nous familiariser avec les commandes de base de Redis, lançons le client Redis standard:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ redis-cli
 ```
 Le serveur attend alors que vous entriez une commande.
@@ -67,7 +67,7 @@ Le serveur attend alors que vous entriez une commande.
 
 Pour stocker un nouveau couple (clé, valeur) ou valeur est de type String, utilisez simplement la commande `SET`. Par exemple, pour stocker la note (sur 20) de l'étudiant g12345 pour le cours de 5DON4, tapez:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ SET g12345 18
 ```
 SET stocke la valeur comme un String (même si vous lui passer un nombre entier).
@@ -76,7 +76,7 @@ SET stocke la valeur comme un String (même si vous lui passer un nombre entier)
 
 Pour lire la valeur associée à la clé `g12345`:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ GET g12345
 ```
 Redis accepte n'importe quelle suite d'octets en guise de clé (avec une taille de clé limitée à 512 MB), ici nous nous simplifierons la vie et utiliserons simplement des String.  
@@ -85,7 +85,7 @@ Redis accepte n'importe quelle suite d'octets en guise de clé (avec une taille 
 
 Pour lister toutes les clés stockées:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ KEYS *
 ```
 
@@ -99,12 +99,12 @@ Voyons comment manipuler un autre type des données: les listes. Les listes sont
 
 Créons par exemple une nouvelle liste contenant quelques étudiants du groupe D111:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ LPUSH D111 g12345 g23456 g34567
 ```
 `LPUSH` permet d'insérer en tête de liste. Pour supprimer et récupérer la valeur de tête:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ LPOP D111
 ```
 
@@ -112,7 +112,7 @@ $ LPOP D111
 
 Pour connaître le type de données (String, Liste, ...) associé à une clé sous Redis, utilisez `TYPE`:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $ TYPE D111
 ```
 
@@ -128,7 +128,7 @@ $ TYPE D111
 
 Pour supprimer une clé:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $  DEL g12345
 ```
 
@@ -136,7 +136,7 @@ Les listes sont automatiquement supprimées dès qu'elles sont vides (mais vous 
 
 Il est aussi possible de demander à Redis de supprimer automatiquement une clé avec un certain nombre de secondes (utile pour nettoyer la mémoire automatiquement si on sait que la clé ne sera plus utile passé ce délai):
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $  EXPIRE g23456 5
 ```
 N'hésitez pas à découvrir d'autres commandes Redis par vous même en parcourant la documentation en ligne.
@@ -149,7 +149,7 @@ Redis étant un système In-Memory, les données sont à priori stockées en mé
 
 La façon dont Redis assure la persistance des données peut (évidemment !) se configurer, nous allons en parler dans la suite. Sachez déjà qu'il est possible de forcer une sauvegarde sur le disque en entrant:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 $  SAVE
 ```
 Ceci crée un fichier binaire `dump.rdp` que Redis peut utiliser pour reconstituer la DB en mémoire centrale. Redis exécute automatiquement un SAVE lorsque le serveur est stoppé (lorsqu'on stoppe le conteneur Docker, dans notre cas).
@@ -161,23 +161,25 @@ Redis fournit différentes librairies permettant de se connecter au serveur à p
 Sous Java, nous utiliserons la librairie `Jedis`. Créez maintenant un nouveau projet Java sous Maven. Ajoutez la dépendance suivante au pom.xml:
 
 <Card title="Dépendance Jedis" icon="seti:maven">
-``` xml showLineNumbers=false
+
+``` xml showLineNumbers=false frame=none
 <dependency>
     <groupId>redis.clients</groupId>
     <artifactId>jedis</artifactId>
     <version>6.0.0</version>
 </dependency>
 ```
+
 </Card>
 
 Après avoir importé la classe `Jedis`:
 
-```java
+```java frame=none
 import redis.clients.jedis.Jedis;
 ```
 l'accès au serveur est très simple:
 
-```java
+```java frame=none
 Jedis jedis = new Jedis("localhost", 6379);
 
 jedis.set("g12345" + i, Integer.toString(14));
@@ -196,7 +198,7 @@ L'approche présenté ci-dessus (utilisant uniquement la classe `Jedis`) n'est p
 
 Pour une application multi-thread, passez par la classe `JedisPool`:
 
-```java
+```java frame=none
 /* JedisPool permet de gérer les connections au serveur 
 de façon thread-safe.
 */
@@ -231,7 +233,10 @@ Voici comment procéder:
 <Steps>
 1. Créez un nouveau projet avec Maven contenant la dépendance à `Jedis` dans le `pom.xml`.
 
-2. Créez un package `model` ainsi qu'une classe `RateLimiter`. Cette classe comportera trois attributs: le nombre `maxReq` maximal de requête acceptée par intervalle de temps, la durée en secondes `nbSeq` de l'intervalle de temps, ainsi qu'un objet `JedisPool` qui sera utilisé pour la connection au serveur Redis.
+2. Créez un package `model` ainsi qu'une classe `RateLimiter`. Cette classe comportera trois attributs: 
+   * le nombre `maxReq` maximal de requête acceptée par intervalle de temps, 
+   * la durée en secondes `nbSeq` de l'intervalle de temps, 
+   * ainsi qu'un objet `JedisPool` qui sera utilisé pour la connection au serveur Redis.
 
 3. Ajoutez un constructeur a deux paramètres à `RateLimiter` permettant d'initialiser `maxReq` et `nbSeq`. Initialisez le JedisPool avec le serveur Redis local et le numéro de port standard 6379 (ceci peut éventuellement se configurer dans le constructeur si nécessaire, mais nous nous simplifions la vie ici).
 
@@ -255,9 +260,9 @@ Voyons ensemble comment faire cela.
 <Steps>
 1. Créez un fichier texte nommé `redis.conf` et contenant (pour le moment) uniquement la ligne:
    
-   `
+   ``` conf showLineNumbers=false title=redis.conf
    SAVE 20 10
-   `
+   ```
    
    Cette ligne va demande à Redis de procéder à une sauvegarde sur le disque toutes les 20 secondes a condition qu'au moins 10 clés aient été modifiées (mises à jour, ajout, suppression).
 
@@ -275,13 +280,13 @@ Voyons ensemble comment faire cela.
 
 La commande a utiliser est donc la suivante:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 docker run -d --name MyRedisConf -v chemin/vers/votre/redis.conf:/usr/local/etc/redis/redis.conf redis redis-server /usr/local/etc/redis/redis.conf
 ```
 
 Pour s'assurer que Redis n'a rencontré aucune erreur avec le fichier de configuration, allez voir dans les logs:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 docker logs MyRedisConf
 ```
 
@@ -295,9 +300,9 @@ Redis propose plusieurs façons d'assurer la persistance des données sur le dis
 
 Si aucune option de sauvegarde n'est configurée, les données sont perdues en cas de crash du serveur. Pour désactiver la persistance, ajoutez simplement la ligne suivante dans le fichier de configuration:
 
-`
+``` text showLineNumbers=false title=redis.conf
 SAVE ""
-`
+``` 
 
 Cette option peut être envisagée si un perte des données est sans grande conséquence sur l'application.
 
@@ -311,9 +316,9 @@ En cas de crash du serveur Redis, seul le cache est perdu ce qui n'est pas gêna
 
 Redis effectue des sauvegardes régulières de toutes les données dans le fichier `dump.rdb` mentionné ci-dessus. Ce fichier est appelé un **snapshot file** dans la documentation Redis. Nous avons déjà vu à la section précédente comment configurer ceci, ajoutez la ligne:
 
-`
+```text showLineNumbers=false title=redis.conf
 SAVE nbSecondes nbModifs
-`
+```
 
 pour demander à Redis de sauver les données sur le disque toutes les `nbSecondes`, pourvu que `nbModifs` aient été effectuées.
 
@@ -323,9 +328,9 @@ Avec cette option, Redis enregistre uniquement les différentes opérations dans
 
 Ajoutez la ligne:
 
-`
+``` text showLineNumbers=false config title=redis.conf
 APPENDONLY YES
-`
+```
 
 dans le fichier de configuration pour que Redis ajoute chaque nouvelle modification de données à la fin du fichier AOF. Il est également possible de configurer la fréquence à laquelle Redis force le système d'exploitation à écrire les données du fichier (présentes initialement dans le cache) sur le disque (appel système `fsync` sous Linux). Des appels à `fsync` trop fréquents ralentissent le système, mais permettent de minimiser les données perdues en cas de crash du serveur, voir la documentation pour plus de détails à ce niveau.
  
@@ -348,7 +353,7 @@ Par ailleurs, comme mentionné dans la documentation Redis:
 
 Voici un exemple de fichier de configuration avec diverses options de sauvegardes activées:
 
-```
+``` text showLineNumbers=false title=redis.config
 APPENDONLY YES
 
 SAVE 600 50
@@ -370,7 +375,8 @@ Les étapes à suivre sont les suivantes:
 1. Déterminez l'adresse IP du serveur maître.
 
 2. Créez un fichier de configuration pour le serveur esclave avec la ligne suivante:
-   ```
+
+   ``` text showLineNumbers=false title=redis.config
    REPLICAOF adresse_ip_du_maître 6379
    ```
 3. Lancez un conteneur Redis sur la machine maître, en prenant bien garde d'exposer le port 6379 (comme expliqué en début de TD).
