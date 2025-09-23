@@ -16,7 +16,7 @@ La documentation officielle d'Elasticsearch mentionne de nombreuses entreprises 
 Pour installer ElasticSearch via Docker:
 
 ``` bash showLineNumbers=false
-docker run -d --name elasticsearch -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+docker run -d --name elasticsearch -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:9.0.1
 ```
 
 La commande devrait à présent vous semble familière, à l'exception sans doute des deux options 
@@ -97,6 +97,9 @@ Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, 
 ```
 </Card>
 
+
+**Attention**: Prenez garde à ce que la version de la dépendance utilisée (9.0.1 ci-dessus) soit la même que la version d'ElasticSearch installée (voir la commande docker). Dans le cas contraire, cela peut donner naissance à des problèmes de communication entre votre application Java et le serveur.
+
 La connection au serveur s'écrit alors comme ceci:
 
 
@@ -118,9 +121,9 @@ public static void main(String[] args) {
 
 La librairie comprend une couche de transport (pour l'exécution des requêtes Rest) ainsi que de nombreuses fonctionnalités permettant de parser le JSON et de gérer la sécurité.
 
-Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD. 
+Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD (nous nous contentons d'une présentation de l'aspect lié à la gestion de données).
 
-Voyez la documentation officielle pour une explication détaillée: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
+Voyez la documentation officielle pour une explication détaillée de la librairie: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
 
 
 
