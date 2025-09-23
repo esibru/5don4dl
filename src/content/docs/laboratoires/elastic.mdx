@@ -70,9 +70,7 @@ Pour communiquer avec ElasticSearch nous pouvons au choix:
 Essayons donc d'enregistrer un premier document en envoyant une requête `POST` au serveur:
 
 ``` bash showLineNumbers=false
-curl -X POST "http://localhost:9200/cours/_doc/1" \
-  -H 'Content-Type: application/json' \
-  -d '{"UE": "5DON4", "annee": 2025, "nbEcts": 4}'
+curl -X POST "http://localhost:9200/cours/_doc/1" -H 'Content-Type: application/json' -d '{"ue": "5DON4", "coordinateur": "SRD", "nbEcts": 4}'
 ```
 
 Cette commande:
@@ -87,8 +85,36 @@ Pour lire les données et vérifier que le document a été enregistré correcte
 curl http://localhost:9200/cours/_doc/1
 ```
 
+Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, passons à l'utilisation du client Java. Ajoutez la dépendance suivante:
+
+<Card title="Driver ElasticSearch" icon="seti:maven">
+``` xml showLineNumbers=false
+<dependency>
+    <groupId>co.elastic.clients</groupId>
+    <artifactId>elasticsearch-java</artifactId>
+    <version>9.0.1</version>
+</dependency>
+```
+</Card>
+
+La connection au serveur s'écrit alors comme ceci:
+
+https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
 
 
+```java
+public static void main(String[] args) {
+        String serverUrl = "https://localhost:9200";
+
+        ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(serverUrl));
+
+        try{
+            esClient.close();
+        }catch (Exception e){
+		// ...
+        }
+}
+```
 
 
 
