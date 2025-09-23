@@ -148,6 +148,46 @@ if (getResponse.found()) {
 </Steps>
 
 
+<Card title="Ajoutez de nouveaux documents" icon="pencil">
+Ajoutez de nouveaux cours de l'ESI à votre index `cours` à partir de votre code Java. Faites une recherche dans la documentation d'elasticsearch (avec les mots clés `Indexing single documents`) pour savoir comment procédé.
+</Card>
+
+Ajoutez au moins une dizaine de cours (ceci nous permettra de tester les fonctionnalités de recherche à la section suivante).
+
+## 4) Rechercher des documents
+
+Avec tout cela, nous n'avons pas encore abordé les fonctionnalités de recherche d'ElasticSearch. Il est par exemple possible de chercher des documents:
+
+- contenant exactement une certain valeur (méthode `match`). Par exemple, rechercher l'UE nommée  `5DON4`.
+
+- contenant une sous-chaîne de caractère (méthode `wildcard`). C'est l'équivalent du `LIKE` en SQL.
+
+- satisfaisant une certaine expression régulière (méthode `regexp`).
+
+- satisfaisant une combinaison des conditions ci-dessus (méthode `bool`).
+
+Par exemple, pour chercher les UE de `DON4` nous pourrions écrire:
+
+```java
+SearchResponse<Cours> search = esClient.search(s -> s
+        .index("cours")
+        .query(q -> q
+            .wildcard(w -> w
+                .field("ue")   
+                .value("*DON*")        // * = n’importe quelle séquence de caractères
+            )
+        ),
+    Cours.class
+);
+
+for (Hit<Cours> hit : search.hits().hits()) {
+            System.out.println("Cours: " + hit.source().ue);
+}
+
+```
+
+
+
 
 
 
