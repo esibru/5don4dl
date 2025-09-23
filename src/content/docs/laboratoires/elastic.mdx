@@ -75,6 +75,17 @@ curl -X POST "http://localhost:9200/cours/_doc/1" \
   -d '{"UE": "5DON4", "annee": 2025, "nbEcts": 4}'
 ```
 
+Cette commande:
+
+- crée un index nommé `cours`,
+
+- ajoute à cet index un document JSON (c'est le `-H 'Content-Type: application/json'`) dont l'identifiant est `1` et dont les données sont précisées après le `-d`.
+
+Pour lire les données et vérifier que le document a été enregistré correctement:
+
+``` bash showLineNumbers=false
+curl http://localhost:9200/cours/_doc/1
+```
 
 
 
