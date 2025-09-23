@@ -123,7 +123,7 @@ La librairie comprend une couche de transport (pour l'exécution des requêtes R
 
 Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD (nous nous contentons d'une présentation de l'aspect lié à la gestion de données).
 
-Voyez la documentation officielle pour une explication détaillée de la librairie: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
+Voyez la documentation officielle pour une explication détaillée de la librairie Java: https://www.elastic.co/docs/reference/elasticsearch/clients/java/usage
 
 Pour lire les données d'un cours d'id donné:
 
@@ -166,7 +166,7 @@ Avec tout cela, nous n'avons pas encore abordé les fonctionnalités de recherch
 
 - satisfaisant une combinaison des conditions ci-dessus (méthode `bool`).
 
-Par exemple, pour chercher les UE de `DON4` nous pourrions écrire:
+Par exemple, pour chercher toutes les UE de `DON` de l'ESI nous pourrions écrire:
 
 ```java
 SearchResponse<Cours> search = esClient.search(s -> s
@@ -186,7 +186,13 @@ for (Hit<Cours> hit : search.hits().hits()) {
 
 ```
 
-
+<Card title="Rechercher" icon="pencil">
+Utilisez la documentation d'ElasticSearch pour écrire une application Java permettant d'effectuer diverses chercher sur les cours de l'ESI selon divers critères, par exemple:
+- Trouver tous les cours d'un certain bloc,
+- Trouver tous les cours de DON ou de DEV,
+- Trouver tous les cours de DON donné en Bloc2.
+- ...
+</Card>
 
 
 
