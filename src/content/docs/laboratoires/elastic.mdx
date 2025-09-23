@@ -99,10 +99,10 @@ Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, 
 
 La connection au serveur s'écrit alors comme ceci:
 
-https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
-
 
 ```java
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
 public static void main(String[] args) {
         String serverUrl = "https://localhost:9200";
 
@@ -115,6 +115,13 @@ public static void main(String[] args) {
         }
 }
 ```
+
+La librairie comprend une couche de transport (pour l'exécution des requêtes Rest) ainsi que de nombreuses fonctionnalités permettant de parser le JSON et de gérer la sécurité.
+
+Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD. 
+
+Voyez la documentation officielle pour une explication détaillée: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
+
 
 
 
