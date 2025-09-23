@@ -1,0 +1,128 @@
+---
+title: Introduction à ElasticSearch
+
+---
+import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+
+## 1) Introduction
+
+Nous vous proposons ici une introduction à Elasticsearch, un système stockant des documents JSON (comme MongoDB donc) mais plutôt axé sur la recherche avancée, l'analyse et la visualisation des données.
+
+La documentation officielle d'Elasticsearch mentionne de nombreuses entreprises qui en font usage pour les besoins cités ci-desssus, voyez:  https://www.elastic.co/customers
+
+
+## 2) Installation d'ElasticSearch
+
+Pour installer ElasticSearch via Docker:
+
+``` bash showLineNumbers=false
+docker run -d --name elasticsearch -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+```
+
+La commande devrait à présent vous semble familière, à l'exception sans doute des deux options 
+
+`-e "discovery.type=single-node" -e "xpack.security.enabled=false"`.
+
+La première option sert simplement à demander à ElastiSearch de fonctionner en mode 'standalone' (une seule instance d'ElasticSearch) plutôt qu'en mode 'cluster' (plusieurs instances d'ElasticSearch fonctionnant en parallèle).
+
+Utiliser plusieurs instances d'ElasticSearch permet d'augmenter la scalabilité de l'installation (la capacité de stockage/de calcul), nous travaillerons en mode standalone pour moment (notre but est de découvrir ElasticSearch).
+
+La deuxième option sert à désactiver la sécurité, ce qui sera pratique pour se connecter facilement à ElasticSearch dans un labo de découverte comme celui-ci.
+
+<Aside type="caution" title="ElasticSearch en production">
+Dans un environnement de production, ne désactivez évidemment pas la sécurité.
+</Aside>
+
+Consultez la documentation officielle d'ElasticSearch pour savoir comment configurer correctement la sécurité et les clusters éventuels, nous ne nous en préocupperons pas dans ce labo d'introduction.
+
+
+ElasticSearch stocke les documents dans des `index`, l'équivalent d'une collection sous MongoDB.
+
+<Aside type="caution" title="Index sous ElasticSearch">
+
+Ne pas confondre la notion d'index sur un SGBD relationnel(=une structure de donnée permettant d'accéler les requêtes SQL) et un index sur ElasticSearch (=un conteneur pour les documents JSON).
+
+</Aside>
+
+ElasticSearch fournit essentiellement une API Rest (HTTP) pour communiquer.
+
+Testez donc que le serveur est bien opérationnel au moyen de la commande:
+
+``` bash showLineNumbers=false
+curl http://localhost:9200
+```
+
+Le serveur répond normalement vous renvoyant quelques informations (le nom du cluster, notamment). 
+
+Si vous le souhaitez, vous pouvez installer un outil de visualisation des données stockées appelé `Kibana`.
+
+## 3) Utiliser ElasticSearch
+
+Pour communiquer avec ElasticSearch nous pouvons au choix:
+
+- lui envoyer directement une requête HTTP (GET, POST, ...).
+
+- utiliser l'interface graphique Kibana (à installer séparément, voir la documention officielle).
+
+- utiliser une librairire cliente lié à un langage et accéder au serveur au moyen de cette librairie.
+
+
+Essayons donc d'enregistrer un premier document en envoyant une requête `POST` au serveur:
+
+``` bash showLineNumbers=false
+curl -X POST "http://localhost:9200/cours/_doc/1" -H 'Content-Type: application/json' -d '{"ue": "5DON4", "coordinateur": "SRD", "nbEcts": 4}'
+```
+
+Cette commande:
+
+- crée un index nommé `cours`,
+
+- ajoute à cet index un document JSON (c'est le `-H 'Content-Type: application/json'`) dont l'identifiant est `1` et dont les données sont précisées après le `-d`.
+
+Pour lire les données et vérifier que le document a été enregistré correctement:
+
+``` bash showLineNumbers=false
+curl http://localhost:9200/cours/_doc/1
+```
+
+Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, passons à l'utilisation du client Java. Ajoutez la dépendance suivante:
+
+<Card title="Driver ElasticSearch" icon="seti:maven">
+``` xml showLineNumbers=false
+<dependency>
+    <groupId>co.elastic.clients</groupId>
+    <artifactId>elasticsearch-java</artifactId>
+    <version>9.0.1</version>
+</dependency>
+```
+</Card>
+
+La connection au serveur s'écrit alors comme ceci:
+
+
+```java
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
+public static void main(String[] args) {
+        String serverUrl = "https://localhost:9200";
+
+        ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(serverUrl));
+
+        try{
+            esClient.close();
+        }catch (Exception e){
+		// ...
+        }
+}
+```
+
+La librairie comprend une couche de transport (pour l'exécution des requêtes Rest) ainsi que de nombreuses fonctionnalités permettant de parser le JSON et de gérer la sécurité.
+
+Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD. 
+
+Voyez la documentation officielle pour une explication détaillée: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
+
+
+
+
+
