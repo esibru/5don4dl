@@ -70,7 +70,7 @@ Pour communiquer avec ElasticSearch nous pouvons au choix:
 Essayons donc d'enregistrer un premier document en envoyant une requête `POST` au serveur:
 
 ``` bash showLineNumbers=false
-curl -X POST "http://localhost:9200/cours/_doc/1" -H 'Content-Type: application/json' -d '{"ue": "5DON4", "coordinateur": "SRD", "nbEcts": 4}'
+curl -X POST "http://localhost:9200/cours/_doc/1" -H 'Content-Type: application/json' -d '{"ue": "5DON4", "coordinateur": "SDR", "nbEcts": 4}'
 ```
 
 Cette commande:
@@ -118,12 +118,34 @@ public static void main(String[] args) {
         }
 }
 ```
-
-La librairie comprend une couche de transport (pour l'exécution des requêtes Rest) ainsi que de nombreuses fonctionnalités permettant de parser le JSON et de gérer la sécurité.
+ 
+La librairie comprend une couche de transport (pour l'exécution des requêtes Rest) ainsi que de nombreuses fonctionnalités permettant de parser le JSON (la libraire Jackson est utilisée pour (dé)sérialiser le JSON) et de gérer la sécurité.
 
 Rappelons une fois de plus que la sécurité est un aspect important, mais non présenté dans ce TD (nous nous contentons d'une présentation de l'aspect lié à la gestion de données).
 
 Voyez la documentation officielle pour une explication détaillée de la librairie: https://www.elastic.co/docs/reference/elasticsearch/clients/java/setup/connecting
+
+Pour lire les données d'un cours d'id donné:
+
+<Steps>
+1. Créez un `record` nommé `Cours` au sein de votre code Java et contenant les attributs nécessaires (ue, coordinateur, nbEcts).
+
+2. Utilisez le code suivant:
+
+```java
+GetResponse<Cours> getResponse = esClient.get(g -> g
+                            .index("cours")
+                            .id("1"),
+                   Cours.class
+            );
+if (getResponse.found()) {
+     Cours cours = getResponse.source();
+     System.out.println("Le cours d'id 1 est: " + cours.ue());
+     System.out.println("Le coordinateur est : " + cours.coordinateur());
+}
+```
+
+</Steps>
 
 
 
