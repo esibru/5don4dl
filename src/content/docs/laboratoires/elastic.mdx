@@ -1,5 +1,5 @@
 ---
-title: Introduction à ElasticSearch
+title: Introduction à Elasticsearch
 
 ---
 import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
@@ -11,54 +11,58 @@ Nous vous proposons ici une introduction à Elasticsearch, un système stockant 
 La documentation officielle d'Elasticsearch mentionne de nombreuses entreprises qui en font usage pour les besoins cités ci-desssus, voyez:  https://www.elastic.co/customers
 
 
-## 2) Installation d'ElasticSearch
+## 2) Installation d'Elasticsearch
 
-Pour installer ElasticSearch via Docker:
+Pour installer Elasticsearch via Docker:
 
-``` bash showLineNumbers=false
+
+``` bash showLineNumbers=false frame=none
 docker run -d --name elasticsearch -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:9.0.1
 ```
 
 La commande devrait à présent vous semble familière, à l'exception sans doute des deux options 
 
-`-e "discovery.type=single-node" -e "xpack.security.enabled=false"`.
+* `-e "discovery.type=single-node"`
+* `-e "xpack.security.enabled=false"`.
 
-La première option sert simplement à demander à ElastiSearch de fonctionner en mode 'standalone' (une seule instance d'ElasticSearch) plutôt qu'en mode 'cluster' (plusieurs instances d'ElasticSearch fonctionnant en parallèle).
+La première option sert simplement à demander à ElastiSearch de fonctionner en mode '*standalone*' (une seule instance d'Elasticsearch) plutôt qu'en mode '*cluster*' (plusieurs instances d'Elasticsearch fonctionnant en parallèle).
 
-Utiliser plusieurs instances d'ElasticSearch permet d'augmenter la scalabilité de l'installation (la capacité de stockage/de calcul), nous travaillerons en mode standalone pour moment (notre but est de découvrir ElasticSearch).
+Utiliser plusieurs instances d'Elasticsearch permet d'augmenter la scalabilité de l'installation (la capacité de stockage/de calcul), nous travaillerons en mode standalone pour le moment (notre but est de découvrir Elasticsearch).
 
-La deuxième option sert à désactiver la sécurité, ce qui sera pratique pour se connecter facilement à ElasticSearch dans un labo de découverte comme celui-ci.
+La deuxième option sert à désactiver la sécurité, ce qui sera pratique pour se connecter facilement à Elasticsearch dans un labo de découverte comme celui-ci.
 
-<Aside type="caution" title="ElasticSearch en production">
+<Aside type="caution" title="Elasticsearch en production">
+
 Dans un environnement de production, ne désactivez évidemment pas la sécurité.
 </Aside>
 
-Consultez la documentation officielle d'ElasticSearch pour savoir comment configurer correctement la sécurité et les clusters éventuels, nous ne nous en préocupperons pas dans ce labo d'introduction.
+<Aside title="Configuration de la sécurité (optionnel)" icon="setting">
+Consultez la documentation officielle d'Elasticsearch pour savoir comment configurer correctement la sécurité et les clusters éventuels, nous ne nous en préocupperons pas dans ce labo d'introduction.
+</Aside>
 
+Elasticsearch stocke les documents dans des `index`, l'équivalent d'une collection sous MongoDB.
 
-ElasticSearch stocke les documents dans des `index`, l'équivalent d'une collection sous MongoDB.
+<Aside type="caution" title="Index sous Elasticsearch">
 
-<Aside type="caution" title="Index sous ElasticSearch">
-
-Ne pas confondre la notion d'index sur un SGBD relationnel(=une structure de donnée permettant d'accéler les requêtes SQL) et un index sur ElasticSearch (=un conteneur pour les documents JSON).
+Ne pas confondre la notion d'index sur un SGBD relationnel (=une structure de donnée permettant d'accélérer les requêtes SQL) et un index sur Elasticsearch (=un conteneur pour les documents JSON).
 
 </Aside>
 
-ElasticSearch fournit essentiellement une API Rest (HTTP) pour communiquer.
+Elasticsearch fournit essentiellement une API Rest (HTTP) pour communiquer.
 
 Testez donc que le serveur est bien opérationnel au moyen de la commande:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 curl http://localhost:9200
 ```
 
 Le serveur répond normalement vous renvoyant quelques informations (le nom du cluster, notamment). 
 
-Si vous le souhaitez, vous pouvez installer un outil de visualisation des données stockées appelé `Kibana`.
+Si vous le souhaitez, vous pouvez installer un outil de visualisation des données stockées appelé [Kibana](https://www.elastic.co/downloads/kibana).
 
-## 3) Utiliser ElasticSearch
+## 3) Utiliser Elasticsearch
 
-Pour communiquer avec ElasticSearch nous pouvons au choix:
+Pour communiquer avec Elasticsearch nous pouvons au choix:
 
 - lui envoyer directement une requête HTTP (GET, POST, ...).
 
@@ -69,7 +73,7 @@ Pour communiquer avec ElasticSearch nous pouvons au choix:
 
 Essayons donc d'enregistrer un premier document en envoyant une requête `POST` au serveur:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 curl -X POST "http://localhost:9200/cours/_doc/1" -H 'Content-Type: application/json' -d '{"ue": "5DON4", "coordinateur": "SDR", "nbEcts": 4}'
 ```
 
@@ -81,14 +85,14 @@ Cette commande:
 
 Pour lire les données et vérifier que le document a été enregistré correctement:
 
-``` bash showLineNumbers=false
+``` bash showLineNumbers=false frame=none
 curl http://localhost:9200/cours/_doc/1
 ```
 
 Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, passons à l'utilisation du client Java. Ajoutez la dépendance suivante:
 
-<Card title="Driver ElasticSearch" icon="seti:maven">
-``` xml showLineNumbers=false
+<Card title="Driver Elasticsearch" icon="seti:maven">
+``` xml showLineNumbers=false frame=none
 <dependency>
     <groupId>co.elastic.clients</groupId>
     <artifactId>elasticsearch-java</artifactId>
@@ -97,8 +101,9 @@ Comme la communication par l'envoi direct de requêtes HTTP est assez pénible, 
 ```
 </Card>
 
-
-**Attention**: Prenez garde à ce que la version de la dépendance utilisée (9.0.1 ci-dessus) soit la même que la version d'ElasticSearch installée (voir la commande docker). Dans le cas contraire, cela peut donner naissance à des problèmes de communication entre votre application Java et le serveur.
+<Aside title="Attention" type="caution">
+Prenez garde à ce que la version de la dépendance utilisée (9.0.1 ci-dessus) soit la même que la version d'Elasticsearch installée (voir la commande docker). Dans le cas contraire, cela peut donner naissance à des problèmes de communication entre votre application Java et le serveur.
+</Aside>
 
 La connection au serveur s'écrit alors comme ceci:
 
@@ -147,14 +152,14 @@ if (getResponse.found()) {
 
 
 <Card title="Ajoutez de nouveaux documents" icon="pencil">
-Ajoutez de nouveaux cours de l'ESI à votre index `cours` à partir de votre code Java. Faites une recherche dans la documentation d'elasticsearch (avec les mots clés `Indexing single documents`) pour savoir comment procédé.
+Ajoutez de nouveaux cours de l'ESI à votre index `cours` à partir de votre code Java. Faites une recherche dans la documentation d'Elasticsearch (avec les mots clés `Indexing single documents`) pour savoir comment procéder.
 </Card>
 
 Ajoutez au moins une dizaine de cours (ceci nous permettra de tester les fonctionnalités de recherche à la section suivante).
 
 ## 4) Rechercher des documents
 
-Avec tout cela, nous n'avons pas encore abordé les fonctionnalités de recherche d'ElasticSearch. Il est par exemple possible de chercher des documents:
+Avec tout cela, nous n'avons pas encore abordé les fonctionnalités de recherche d'Elasticsearch. Il est par exemple possible de chercher des documents:
 
 - contenant exactement une certain valeur (méthode `match`). Par exemple, rechercher l'UE nommée  `5DON4`.
 
@@ -185,7 +190,7 @@ for (Hit<Cours> hit : search.hits().hits()) {
 ```
 
 <Card title="Rechercher" icon="pencil">
-Utilisez la documentation d'ElasticSearch pour écrire une application Java permettant d'effectuer diverses chercher sur les cours de l'ESI selon divers critères, par exemple:
+Utilisez la documentation d'Elasticsearch pour écrire une application Java permettant d'effectuer diverses chercher sur les cours de l'ESI selon divers critères, par exemple:
 - Trouver tous les cours d'un certain bloc,
 - Trouver tous les cours de DON ou de DEV,
 - Trouver tous les cours de DON donné en Bloc2.
