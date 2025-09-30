@@ -197,6 +197,62 @@ Utilisez la documentation d'Elasticsearch pour écrire une application Java perm
 - ...
 </Card>
 
+## 5) Recherche avancée
 
+Venons en à présent à une des vraies forces d'ElasticSearch: les options de recherches avancées, et en particulier les **recherches floues (fuzzy search)**.
 
+L'idée est qu'ElasticSearch est capable de retrouver un document contenant une certaine valeur même si la valeur précisée pour la recherche contient une faute de frappe.
 
+**Exemple**: Vous lancez une recherche permettant de retrouver les cours de base de données sur base du mot clé `DOM` (au lieu de `DON`). ElasticSearch  retrouve tout de même les cours de `DON`.
+
+Comment ElasticSearch procède-t-il pour ce faire ? Il utilise simplement la **distance de Levenshtein** entre deux chaînes de caractères pour savoir si deux chaînes de caractères différentes sont "proches" l'une de l'autre ou pas.
+
+La distance de Levenshtein `lev(s,t)` entre deux chaînes de caractères `s` et `t` est définie comme le nombre minimum de suppression,insertion,substitution de lettres nécessaire pour passer de `s` à `t`.
+
+Par exemple:
+
+`lev(DOM,DON) = lev(5DON,DON) = lev(DO,DON) = 1`
+
+vu que, dans chacun de ces trois cas, on peut passer d'une chaîne à l'autre au moyen d'une seule substitution (premier cas),insertion (deuxième cas),suppression (troisième cas) de lettre.
+
+Pour plus d'information sur la distance de Levenshtein (et notamment une formulation récursive de `lev`) voyez par exemple: https://en.wikipedia.org/wiki/Levenshtein_distance:
+
+<Card title="Distance de Levenshtein" icon="pencil">
+Ecrivez en Java (ou dans votre langage de programmation favori) une méthode récursive calculant la distance de Levenshtein de deux chaînes de caractères reçues en paramètre.
+</Card>
+
+A présent, pour demander à ElasticSearch de prendre en compte des chaînes de caractères situées à une certaine distance dans sa recherche:
+
+```java
+// Remplacez le '1' par la valeur souhaitée
+String distance = "1"
+SearchResponse<Cours> search = esClient.search(s -> s
+                        .index("cours")
+                        .query(q -> q
+                                .fuzzy(f -> f
+                                        .field("ue")
+                                        .value("DOM") 	// faute volontaire
+                                        .fuzziness(distance)     
+                                )
+                        ),
+                Cours.class
+        );
+```
+
+On peut aussi laisser ElasticSearch choisir une distance qui convient en fonction de la longueur de la chaîne (au plus la chaîne est longue, au plus la distance choisie sera grande) en précistant:
+
+```java
+.fuzziness("AUTO") 
+```
+
+<Card title="Rechercher" icon="pencil">
+Modifiez votre application Java permettant d'effectuer des recherches sur les cours de l'ESI. L'application devra permettre d'effectuer une recherche sur base de l'acronyme du coordinateur (SDR, SRE, PBT, ...) ou de l'UE (5DON4, ...) en acceptant une certaine tolérance sur les entrées de l'utilisateur.
+</Card>
+
+ElasticSearch fournit des outils de recherche encore plus avancés, notamment:
+
+- le **stemming**: réduire un mot à sa racine de façon inclure les variantes d'un mot dans une recherche. Ceci dépend généralement de la langue. Par exemple, en français, on peut souhaiter qu'une recherche avec le mot clé `analyser` fournisse aussi les documents faisant intervenir les mots `analyse`, `analyses`, `analytique`, etc.
+
+- la recherche sur base de synonymes. On peut définir des synonymes au sein d'un index ElasticSearch, de sorte qu'un recherche sur l'un des mots fournisse aussi les résultats faisant intervenir les synonymes.
+
+Voyez la documentation officielle ElasticSearch pour plus de détails sur ces fonctionnalités avancées.
