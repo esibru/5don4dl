@@ -56,21 +56,28 @@ La documentation officielle de Neo4j est disponible ici: https://neo4j.com/
 
 Nous vous proposons à nouveau ici d'installer Neo4j via une image docker, mais n'hésitez pas à suivre les étapes d'installation spécifiques à votre système d'exploitation si vous le souhaitez.
 
-La commande Docker à utiliser est (remplacez le mot de passe `myPassword` par un mot de passe de votre choix):
 
-``` bash showLineNumbers=false
+
+<Aside icon="seti:docker" title="Installation">
+La commande Docker à utiliser est :
+
+``` bash showLineNumbers=false frame=none
 docker run --name MyNeo4j -p7474:7474 -p7687:7687 -d -e NEO4J_AUTH=neo4j/myPassword neo4j:5
 ```
+* `neo4j/myPassword` définit le nom d'utilisateur et le mot de passe.
+   * Remplacez `myPassword` par un mot de passe de votre choix.
+   * L'utilisateur `neo4j` doit rester inchangé.
+* Utilisez un autre nom de conteneur que MyNeo4j si vous le désirez.
 
-Utilisez un autre nom de conteneur que MyNeo4j si vous le désirez. L'option:
+* L'option:
 
-``` bash showLineNumbers=false
--p7474:7474 -p7687:7687
-```
-
-permet d'exposer les ports 7474 (pour accéder à l'interface web d'administration de Neo4j via votre navigateur) et 7687 (pour l'envoi de commandes au serveur via le protocole Bolt, un protocole spécifique à Neo4j).
-
-Pensez à vérifier que le conteneur est bien actif (`docker ps -a`) et allez consulter les logs en cas de problème éventuel (`docker logs MyNeo4j`). Utilisez les commandes docker habituelles pour lancer/stoper/supprimer le conteneur.
+   ``` bash showLineNumbers=false frame=none
+   -p7474:7474 -p7687:7687
+   ```
+   
+   permet d'exposer les ports 7474 (pour accéder à l'interface web d'administration de Neo4j via votre navigateur) et 7687 (pour l'envoi de commandes au serveur via le protocole Bolt, un protocole spécifique à Neo4j).
+* Pensez à vérifier que le conteneur est bien actif (`docker ps -a`) et allez consulter les logs en cas de problème éventuel (`docker logs MyNeo4j`). Utilisez les commandes docker habituelles pour lancer/stoper/supprimer le conteneur.
+</Aside>
 
 Vous devriez à présent avoir accès à l'interface web via:
 
@@ -94,7 +101,7 @@ Nous allons tout d'abord apprendre à ajouter des noeuds (sommets) et des relati
 
 Mais il est aussi possible de se connecter à Neo4j en ligne de commande:
 
-``` bash showLineNumbers=false
+``` text showLineNumbers=false title=neo4j$ 
 docker exec -it MyNeo4j cypher-shell -u neo4j -p votre_mot_de_passe
 ```
 
@@ -102,7 +109,7 @@ docker exec -it MyNeo4j cypher-shell -u neo4j -p votre_mot_de_passe
 
 Reprenons notre graphe modélisant le réseau autoroutier européen. Pour créer un noeud dont le type est 'City' et ayant comme attributs un nom ('Bruxelles'), un pays (la Belgique) et un id (1), utilisez la requête **CREATE** de la sorte:
 
-``` bash showLineNumbers=false
+``` text showLineNumbers=false title=neo4j$ 
 neo4j$ CREATE (:City{id:1,name:'Bruxelles',country:'Belgique'})
 ```
 
@@ -119,8 +126,8 @@ Pour ajouter un arc entre ces deux villes, la requête CREATE peut également ê
 
 La requête à utiliser pour ajouter une autoroute de longueur 70 de Bruxelles à Mons est donc la suivante (c1 et c2 sont les noms des variables mentionnées ci-dessus):
 
-``` bash showLineNumbers=false
-neo4j$ MATCH (c1:City{id:1}), (c2:City{id:2}) CREATE (c1) - [:HIGHWAY{distance:70}]->(c2)
+``` text showLineNumbers=false title=neo4j$ 
+MATCH (c1:City{id:1}), (c2:City{id:2}) CREATE (c1) - [:HIGHWAY{distance:70}]->(c2)
 ```
 
 Remarquez le nom de la relation (HIGHWAY) et le sens de celle-ci (précisée par la flèche c1 -> c2). Les variables c1 et c2, définies par la requête MATCH, peuvent-être utilisées dans toute la suite (ici, le CREATE).
@@ -149,8 +156,8 @@ Ajoutez les tronçons d'autoroute suivants:
 
 Voyons maintenant comment interroger le graphe de façon à récupérer certaines données. Si on souhaite par exemple savoir quelles sont les villes reliées à Bruxelles (id = 1) par un tronçon d'autoroute, nous pouvons écrire:
 
-``` bash showLineNumbers=false
-neo4j$ MATCH (c1:City{id:1})-[:HIGHWAY]->(dest) RETURN dest.name, dest.country
+``` text showLineNumbers=false title=neo4j$
+MATCH (c1:City{id:1})-[:HIGHWAY]->(dest) RETURN dest.name, dest.country
 ```
 
 ![image](images/matchExampleNeo4j.png)
@@ -159,14 +166,14 @@ Le résultat de la requête s'affiche en dessous. Remarquez la clause RETURN pr�
 
 Cypher permet de résoudre très simplement un des problèmes posés par la modélisation relationnelle d'un graphe: le parcours. Par exemple, pour obtenir des informations sur toutes les villes atteignable à partir de Bruxelles:
 
-``` bash showLineNumbers=false
-neo4j$ MATCH (start:City {id: 1})-[:HIGHWAY*1..]->(ville)
+``` text showLineNumbers=false title=neo4j$
+MATCH (start:City {id: 1})-[:HIGHWAY*1..]->(ville)
 RETURN DISTINCT ville.name, ville.country;
 ```
 
 Remarquez la syntaxe:
 
-``` bash showLineNumbers=false
+``` text showLineNumbers=false title=neo4j$
 [:HIGHWAY*1..]->(ville)
 ```
 qui permet d'obtenir toutes les villes atteignables à partir d'un ou plusieurs liens (`*1..`) de type `HIGHWAY`.
