@@ -255,4 +255,59 @@ ElasticSearch fournit des outils de recherche encore plus avancés, notamment:
 
 - la recherche sur base de synonymes. On peut définir des synonymes au sein d'un index ElasticSearch, de sorte qu'un recherche sur l'un des mots fournisse aussi les résultats faisant intervenir les synonymes.
 
-Voyez la documentation officielle ElasticSearch pour plus de détails sur ces fonctionnalités avancées.
+Voyez ensemble comment configurer le stemming. Pour cela, nous allons devoir créer un nouvel index et lui fournir la configuration JSON suivante:
+
+```json
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "french_stem_analyzer": {
+          "tokenizer": "standard",
+          "filter": ["lowercase", "french_stem"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "titre": { "type": "text", "analyzer": "french_stem_analyzer" }
+    }
+  }
+}
+```
+
+La première partie permet de définir un analyseur qui va découper notre texte en mots (c'est le `"tokenizer": "standard"`), mettre tous les mots en minuscules et appliquer un stemmer français nativement présent dans ElasticSearch (c'est le `"filter": ["lowercase", "french_stem"]`).
+
+La deuxième partie précise que si un champ `titre` est présent dans les documents, il sera de type texte et analysé avec l'analyseur définit ci-dessus.
+
+Dans votre code Java:
+
+1. Mettez le code JSON ci-dessus dans une variable de type String appelée `settings`.
+
+2. Creéez l'index au moyen du code:
+
+```java
+CreateIndexRequest request = CreateIndexRequest.of(c -> c
+                    .index("cours_stemming") // Nom de l'index
+                    .withJson(new StringReader(settings))
+ );
+
+
+CreateIndexResponse createIndexResponse =
+           esClient.indices().create(request);
+```
+
+3. Ajoutez quelques données à l'index, par exemple au moyen de la requête:
+
+```java
+esClient.index(i -> i
+                    .index("cours_stemming")
+                    .id("1")
+                    .document(Map.of("titre", "Analyse de données"))
+            );
+
+```
+Ajoutez plusieurs titres de cours faisant intervenir la raçine du mot `Analyse` comme `Analyses` ou `Analytique` (à votre imagination ...).
+
+4. Testez au moyen d'une recher sur base du mot `Analyse` que tous ces cours sont bien renvoyés.
