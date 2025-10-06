@@ -112,7 +112,7 @@ La connection au serveur s'écrit alors comme ceci:
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 
 public static void main(String[] args) {
-        String serverUrl = "https://localhost:9200";
+        String serverUrl = "http://localhost:9200";
 
         ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(serverUrl));
 
