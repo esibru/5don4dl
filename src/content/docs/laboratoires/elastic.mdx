@@ -64,7 +64,7 @@ Si vous le souhaitez, vous pouvez installer un outil de visualisation des donné
 
 Pour communiquer avec Elasticsearch nous pouvons au choix:
 
-- lui envoyer directement une requête HTTP (GET, POST, ...).
+- lui envoyer directement une requête HTTP (GET, POST...).
 
 - utiliser l'interface graphique Kibana (à installer séparément, voir la documention officielle).
 
@@ -112,7 +112,7 @@ La connection au serveur s'écrit alors comme ceci:
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 
 public static void main(String[] args) {
-        String serverUrl = "https://localhost:9200";
+        String serverUrl = "http://localhost:9200";
 
         ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(serverUrl));
 
@@ -211,9 +211,11 @@ La distance de Levenshtein `lev(s,t)` entre deux chaînes de caractères `s` et 
 
 Par exemple:
 
-`lev(DOM,DON) = lev(5DON,DON) = lev(DO,DON) = 1`
+``` text showLineNumbers=false frame=none 
+lev(DOM,DON) = lev(5DON,DON) = lev(DO,DON) = 1
+```
 
-vu que, dans chacun de ces trois cas, on peut passer d'une chaîne à l'autre au moyen d'une seule substitution (premier cas),insertion (deuxième cas),suppression (troisième cas) de lettre.
+vu que, dans chacun de ces trois cas, on peut passer d'une chaîne à l'autre au moyen d'une seule substitution (premier cas), insertion (deuxième cas), suppression (troisième cas) de lettre.
 
 Pour plus d'information sur la distance de Levenshtein (et notamment une formulation récursive de `lev`) voyez par exemple: https://en.wikipedia.org/wiki/Levenshtein_distance:
 
@@ -246,16 +248,16 @@ On peut aussi laisser ElasticSearch choisir une distance qui convient en fonctio
 ```
 
 <Card title="Rechercher" icon="pencil">
-Modifiez votre application Java permettant d'effectuer des recherches sur les cours de l'ESI. L'application devra permettre d'effectuer une recherche sur base de l'acronyme du coordinateur (SDR, SRE, PBT, ...) ou de l'UE (5DON4, ...) en acceptant une certaine tolérance sur les entrées de l'utilisateur.
+Modifiez votre application Java permettant d'effectuer des recherches sur les cours de l'ESI. L'application devra permettre d'effectuer une recherche sur base de l'acronyme du coordinateur (SDR, SRE, PBT...) ou de l'UE (5DON4...) en acceptant une certaine tolérance sur les entrées de l'utilisateur.
 </Card>
 
 ElasticSearch fournit des outils de recherche encore plus avancés, notamment:
 
-- le **stemming**: réduire un mot à sa racine de façon inclure les variantes d'un mot dans une recherche. Ceci dépend généralement de la langue. Par exemple, en français, on peut souhaiter qu'une recherche avec le mot clé `analyser` fournisse aussi les documents faisant intervenir les mots `analyse`, `analyses`, `analytique`, etc.
+- le **stemming**: réduire un mot à sa racine de façon à inclure les variantes d'un mot dans une recherche. Ceci dépend généralement de la langue. Par exemple, en français, on peut souhaiter qu'une recherche avec le mot clé `analyser` fournisse aussi les documents faisant intervenir les mots `analyse`, `analyses`, `analytique`, etc.
 
-- la recherche sur base de synonymes. On peut définir des synonymes au sein d'un index ElasticSearch, de sorte qu'un recherche sur l'un des mots fournisse aussi les résultats faisant intervenir les synonymes.
+- la recherche sur base de synonymes. On peut définir des synonymes au sein d'un index ElasticSearch, de sorte qu'une recherche sur l'un des mots fournisse aussi les résultats faisant intervenir les synonymes.
 
-Voyez ensemble comment configurer le stemming. Pour cela, nous allons devoir créer un nouvel index et lui fournir la configuration JSON suivante:
+Voyons ensemble comment configurer le stemming. Pour cela, nous allons devoir créer un nouvel index et lui fournir la configuration JSON suivante:
 
 ```json
 {
@@ -283,31 +285,35 @@ La deuxième partie précise que si un champ `titre` est présent dans les docum
 
 Dans votre code Java:
 
+<Steps>
+
 1. Mettez le code JSON ci-dessus dans une variable de type String appelée `settings`.
 
-2. Creéez l'index au moyen du code:
+2. Créez l'index au moyen du code:
 
-```java
-CreateIndexRequest request = CreateIndexRequest.of(c -> c
-                    .index("cours_stemming") // Nom de l'index
-                    .withJson(new StringReader(settings))
- );
-
-
-CreateIndexResponse createIndexResponse =
-           esClient.indices().create(request);
-```
+   ```java
+   CreateIndexRequest request = CreateIndexRequest.of(c -> c
+                       .index("cours_stemming") // Nom de l'index
+                       .withJson(new StringReader(settings))
+    );
+   
+   
+   CreateIndexResponse createIndexResponse =
+              esClient.indices().create(request);
+   ```
 
 3. Ajoutez quelques données à l'index, par exemple au moyen de la requête:
 
-```java
-esClient.index(i -> i
-                    .index("cours_stemming")
-                    .id("1")
-                    .document(Map.of("titre", "Analyse de données"))
-            );
+   ```java
+   esClient.index(i -> i
+                       .index("cours_stemming")
+                       .id("1")
+                       .document(Map.of("titre", "Analyse de données"))
+               );
+   
+   ```
+   Ajoutez plusieurs titres de cours faisant intervenir la raçine du mot `Analyse` comme `Analyses` ou `Analytique` (à votre imagination...).
 
-```
-Ajoutez plusieurs titres de cours faisant intervenir la raçine du mot `Analyse` comme `Analyses` ou `Analytique` (à votre imagination ...).
+4. Testez au moyen d'une recherche sur base du mot `Analyse` que tous ces cours sont bien renvoyés.
 
-4. Testez au moyen d'une recher sur base du mot `Analyse` que tous ces cours sont bien renvoyés.
+</Steps>
