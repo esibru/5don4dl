@@ -24,16 +24,10 @@ export default defineConfig({
                   items: [
                     { label: 'Labo 1 & 2 - Modèle clé-valeur', slug: 'laboratoires/redis'},
                     { label: 'Labo 3 & 4- Modèle graph', slug: 'laboratoires/neo4j'},
-                    { label: 'Labo 5 & 6 - Modèle document', slug: 'laboratoires/mongodb'},
-                    { label: 'Labo 7 & 8 - Recherche et analyse', slug: 'laboratoires/elastic'},
+                    { label: 'Labo 5 - Modèle document', slug: 'laboratoires/mongodb'},
+                    { label: 'Labo 6 - Recherche et analyse', slug: 'laboratoires/elastic'},
                   ],
               },
-            //   {
-            //       label: 'Guides',
-            //       items: [
-            //           { label: 'Guide du rédacteur', slug: 'guides/example' },
-            //       ],
-            //   },
           ],
       }),
 	],

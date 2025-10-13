@@ -1,0 +1,97 @@
+---
+title: Exercice de mise en application(les PAE étudiants)
+
+---
+import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+
+## 1) Introduction
+
+Pour mettre en pratique la matière vue lors des précédentes séances de laboratoire, nous vous proposons ici d'écrire une application permettant d'aider à constituer les programmes annuels des étudiants (PAE).
+
+Votre application devra :
+
+- encoder les différents cours (UE) dispensés au sein de l'ESI.
+
+- encoder les prérequis existant entre ces UE : un étudiant ne pourra pas choisir une UE dans son PAE s'il n'a pas déjà validé les prérequis de cette UE (Exemple: Un étudiant ne peut pas choisir `3DEV3` s'il n'a pas validé `1DEV1` et `2DEV2`).
+
+## 2) Mise en place
+
+Les données décrites ci-dessus seront stockées au moyen des bases de données vues lors des labos précédents:
+
+- une instance de MongoDB pour stocker les données des cours
+- une instance de Neo4J pour stocker les prérequis.
+
+Vous travaillerez avec les langages de votre choix. Nous avons vu comment accéder aux base de données au moyen de clients Java lors des laboratoires, mais vous êtes libre d'utiliser des clients pour d'autres langages (Python, Javascript...) si vous le souhaitez.
+
+### Les données à stocker pour les différentes UE sont:
+
+- l'acronyme (exemples: `1DEV1`,`2DON1`,`3ALG3`, etc),
+- le titre du cours (exemples: 'Développement 1', 'Base de données 1'),
+- le nombre d'ECTS du cours,
+- le numéro du bloc auquel le cours appartien (1, 2 ou 3).
+- quand l'information est facile à trouver, vous pouvez ajouter les professeurs qui dispensent le cours.
+
+Vous encoderez dans un premier temps les cours suivants lors de la mise en place de l'instance MongoDB: `1DEV1`, `2DEV2`, `2DON1`, `3ALG3`, `3DEV3`, `3DON2`, `5DON4`.
+
+
+### Les données à stocker pour les prérequis des UE sont:
+
+- l'acronyme de l'UE,
+- le fait qu'une UE est prérequis d'une autre.
+
+Vous encoderez dans un premier temps les prérequis suivants lors de la mise en place de l'instance Neo4J: 
+
+- `1DEV1` est un prérequis `3DEV3`,
+- `2DON1` est un prérequis de `3DON2`,
+- `3DON2` est un prérequis de `5DON4`.
+
+## 3) Développement du projet (partie 1)
+
+Nous vous demandons de développer une application munie d'une interface utilisateur **conviviale** (vous êtes libres de faire une application desktop, web ou mobile) qui propose :
+
+<Card title="Création d'un cursus" icon="pencil">
+- d'afficher les informations d'un cours donné sur base de son acronyme (titre du cours, nombre d'ECTS, numéro du bloc),
+- d'afficher les prérequis d'un cours donné,
+- d'encoder un nouveau cours ou un nouveau prérequis entre des cours encodés,
+- de supprimer un prérequis entre deux cours.
+</Card>
+
+<Aside type="caution" title="Attention">
+* Comment allez-vous gérer la synchronisation entre les différentes bases de donnés ?
+* Que se passe-t'il si une écriture échoue sur MongoDB?
+* Dans le cas d'une erreur d'écriture sur Neo4J que faire ?
+   {/* * On ignore
+   * Rollback
+   * Script de synchonisation
+   * ... */}
+</Aside>
+
+## 4) Développement du projet (Avancé)
+
+Ajoutez une instance Elastisearch pour aider à la recherche.
+
+<Card title="Recherche floue" icon="pencil">
+Nous souhaiterions ajouter la possiblité de rechercher une UE par matricule, nom... Une certaines tolérance doit être admise.
+
+- Si l'utilisateur recherche `4don2`, l'application doit proposer `3don2` et `4don3`.
+- Si l'utilisateur recherche `persistance des données I` le cours `base des données I` doit être proposé
+- ...
+</Card>
+ 
+<Card title="Aide à l'élaboration d'un PAE" icon="pencil">
+Ajoutez la possiblité de constituer un PAE. Si des contraintes ne sont pas respectées, un message d'erreur doit être affiché à l'utilisateur.
+
+Lors de la constitution d'un PAE, une UE peut :
+- être déclarée acquise;
+- être ajoutée au PAE;
+- être retirée du PAE.
+
+<Aside title="Validité d'un PAE" type="caution" icon="approve-check">
+Un PAE est valide si :
+
+* Le total des ECTS du PAE ≤ 60.
+* Pour chaque UE du PAE, tous ses prérequis sont marqués comme "acquis".
+</Aside>
+</Card>
+
+{/* * piste visualisation de graphe (librairie [cytoscape.js](https://cytoscape.org/)) */}
