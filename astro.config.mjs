@@ -26,6 +26,7 @@ export default defineConfig({
                     { label: 'Labo 3 & 4- Modèle graph', slug: 'laboratoires/neo4j'},
                     { label: 'Labo 5 - Modèle document', slug: 'laboratoires/mongodb'},
                     { label: 'Labo 6 - Recherche et analyse', slug: 'laboratoires/elastic'},
+                    { label: 'Labo 7, 8 & 9 - PAE (mini-projet)', slug: 'laboratoires/exercice/pae'},
                   ],
               },
           ],
