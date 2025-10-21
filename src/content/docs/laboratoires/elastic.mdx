@@ -116,9 +116,9 @@ public static void main(String[] args) {
 
         ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(serverUrl));
 
-        try{
+        try {
             esClient.close();
-        }catch (Exception e){
+        } catch (Exception e) {
 		// ...
         }
 }
@@ -176,7 +176,7 @@ SearchResponse<Cours> search = esClient.search(s -> s
         .index("cours")
         .query(q -> q
             .wildcard(w -> w
-                .field("ue")   
+                .field("ue.keyword")   
                 .value("*DON*")        // * = n’importe quelle séquence de caractères
             )
         ),
@@ -184,7 +184,7 @@ SearchResponse<Cours> search = esClient.search(s -> s
 );
 
 for (Hit<Cours> hit : search.hits().hits()) {
-            System.out.println("Cours: " + hit.source().ue);
+            System.out.println("Cours: " + hit.source().ue());
 }
 
 ```
