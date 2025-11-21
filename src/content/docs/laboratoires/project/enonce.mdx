@@ -1,0 +1,202 @@
+---
+title: Projet de fin de cours — Architecture & Bases de Données
+---
+import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+
+
+## Détails Poesi
+
+### Pondération
+
+Le projet vaut pour 80% de l'ue
+
+### Groupes
+
+Le projet peut se faire par groupe de 2-3.
+
+### Deadline
+
+|Phase|Date|
+|---|---|
+|Phase 1 (inscription)| 19 décembre 2025 (23h55)|
+|Phase 2 & 3 | 04 janvier 2026 (23h55)|
+
+## Rapport du chef de projet après rencontre avec le client
+
+Suite à notre entretien avec le client, nous avons pu clarifier les motivations, le contexte et les grandes lignes fonctionnelles du projet. L'entreprise exprime un besoin croissant de solutions favorisant les interactions humaines véritables, en réponse à un constat sociétal clair : les rencontres physiques se raréfient, et de nombreuses relations se limitent aujourd'hui au digital.
+
+Le client souhaite donc la mise en place d'une application dont l'objectif est de **faciliter et encourager les contacts humains dans le monde réel**, sans se limiter au cadre des rencontres amoureuses. L'accent est mis sur la **création de liens sociaux**, l'initiative personnelle, et la redécouverte d'activités partagées. L'application doit offrir aux utilisateurs la possibilité de découvrir d'autres personnes, d'exprimer leurs centres d'intérêt, de planifier des activités communes et de simuler des rencontres “IRL”.
+
+Il est important de souligner que le client n'attend pas un produit orienté “consommateur” complet, ni une interface finalisée. L'objectif principal reste la **construction d'un système d'information robuste**, capable de gérer différents types de données et de traiter des interactions sociales diverses. La logique métier doit pouvoir évoluer, et les données doivent être structurées de manière cohérente afin de permettre des scénarios tels que :
+
+- associer des centres d'intérêt à des utilisateurs ;
+- simuler des rencontres entre plusieurs personnes ;
+- attribuer et suivre des points de sociabilité ;
+- analyser les liens créés entre participants ;
+- effectuer des recherches dans les profils ou les activités.
+
+Le client met un accent particulier sur la nécessité d'une **architecture modulaire**, permettant de séparer proprement les responsabilités métier : gestion des utilisateurs, gestion des rencontres, gestion des points, et fonctionnalités de recherche. Cette modularité doit également faciliter l'usage de **différents systèmes de gestion de données**, en fonction de leur pertinence et de leur complémentarité.
+
+Enfin, il est clairement établi que l'application devra rester **simple d'accès** : pas d'authentification réelle, pas de géolocalisation active, pas de paiements. Les données utilisées pourront être simulées, et l'interface, même minimale, doit avant tout permettre de démontrer l'intérêt et la cohérence de la structure informatique sous-jacente.
+
+En résumé, le client souhaite un système permettant de **modéliser et expérimenter le fonctionnement d'un réseau social orienté rencontres physiques**, où les interactions et les activités ont une valeur et une trace. Le cœur du projet n'est donc pas l'interface, mais la **qualité de l'architecture, la pertinence de la gestion des données, et la capacité à structurer une application en services cohérents**.
+
+## Objectif du projet
+
+Vous devez concevoir et implémenter un système d'information autour du thème de la création de relations humaines tel que souhaité par le client.
+
+<Aside type="caution" title="Attention">
+L'objectif principal n'est pas l'application, mais l'architecture, la modélisation, et l'utilisation de plusieurs systèmes de gestion de données.
+</Aside>
+
+## Attentes générales
+
+Votre projet doit :
+
+* utiliser plusieurs types de systèmes de gestion de données ;
+* répartir les données de manière cohérente entre ces systèmes ;
+* être structuré de manière modulaire, avec plusieurs services métiers clairement séparés ;
+* exposer les fonctionnalités via une petite interface  ;
+* être accompagné d'une documentation technique **soignée**.
+
+<Aside>
+L'interface peut être rudimentaire : son rôle est uniquement de permettre la démonstration.
+</Aside>
+
+## Fonctionnalités minimales à implémenter
+### Gestion des utilisateurs
+
+* créer un utilisateur ;
+* gérer un ensemble de centres d'intérêt pour chaque utilisateur ;
+* stocker certaines données sous forme structurée, d'autres sous forme libre (au choix selon vos SGBD).
+
+### Rencontres (simulées)
+
+* simuler une rencontre entre deux utilisateurs :
+* choix manuel des utilisateurs,
+* choix d'un lieu ou d'un intérêt,
+* enregistrer cette rencontre dans vos différents systèmes de données, selon votre logique de répartition.
+
+### Points de sociabilité
+
+* attribuer automatiquement un certain nombre de points à chaque rencontre (logique à définir par votre équipe) ;
+* stocker et afficher ces points.
+
+### Recherche
+
+Permettre une recherche parmi :
+* les utilisateurs,
+* les centres d'intérêt,
+* les rencontres passées.
+* La recherche doit exploiter un système de données différent de celui utilisé pour la simple lecture stricte.
+
+## Architecture applicative attendue
+
+Vous devez structurer votre code autour de services métiers.
+
+Chaque service doit :
+
+* remplir un rôle clair,
+* encapsuler une logique métier cohérente,
+* accéder aux données uniquement via des modules dédiés (repositories, adaptateurs…).
+
+<Aside>
+ Tous vos services peuvent tourner dans un seul programme/processus, mais doivent être clairement séparés dans le code.
+</Aside>
+
+## Aspect base de données
+
+Vous devez :
+* choisir les types de systèmes de gestion de données (parmis ceux vu dans votre cursus) ;
+* définir pour chaque système utilisé, quelles données vous y stockez ;
+
+<Aside>
+ Tous vos services peuvent tourner dans un seul programme/processus, mais doivent être clairement séparés dans le code.
+</Aside>
+
+Vous devez cependant :
+
+* utiliser chacun de manière pertinente ;
+* démontrer des requêtes ou opérations spécifiques à chaque système choisi ;
+* expliquer ce que chaque système apporte dans votre architecture.
+
+Exemples :
+
+* base relationnelle,
+* base document,
+* base clé-valeur (en particulier in-memory),
+* base graphe,
+* moteur de recherche plein texte...
+
+## Livrables attendus
+
+### Code
+
+Projet organisé en services métiers et modules d'accès aux données.
+
+### Slides
+
+Des slides contenant :
+
+* Votre architecture globale (schémas + explications).
+* Les modèles de données utilisés pour chaque système choisi.
+* La justification de la répartition des données entre ces systèmes.
+* Des exemples concrets de requêtes ou opérations propres à chaque technologie.
+* Un schéma global montrant les flux entre services et systèmes de données.
+* Explication des techniques mise en place pour la réplication/synchronisation des données.
+
+### Démonstration
+
+Un scénario simple montrant :
+
+* la création d'un utilisateur,
+* la gestion de ses centres d'intérêt,
+* la simulation d'une rencontre,
+* l'utilisation des points (attribution, échange...),
+* la consultation ou recherche des données.
+
+## Barème incrémental
+
+<Steps>
+1. Phase 1 🥉 - projet minimal (maximum 10/20)
+   * ☑️ Utilisation de trois systèmes de gestion de données ;
+   * ☑️ architecture simple en services ;
+   * ☑️ fonctionnalités minimales ;
+   * ☑️ documentation correcte.
+
+   <Aside type="caution" title="Inscription">
+   La finalisation de cette phase est nécessaire pour valider l'inscription. Attention à la deadline (section deadline). 
+   </Aside>
+
+1. Phase 2 🥈 — Projet complet (maximum 14/20)
+   * ☑️ Utilisation de davantage de systèmes de données ;
+   * ☑️ architecture claire et bien justifiée ;
+   * ☑️ requêtes avancées et gestion plus riche des données ;
+   * ☑️ documentation structurée et propre.
+
+1. Phase 3 🥇 — Projet excellent (maximum 20/20)
+   * ☑️ Architecture proche d'une approche orientée services/microservices ;
+   * ☑️ répartition très réfléchie des données entre les systèmes ;
+   * ☑️ modèles optimisés et requêtes complexes ;
+   * ☑️ documentation exemplaire ;
+   * ☑️ démonstration maîtrisée et fluide.
+</Steps>
+
+## Libertés
+
+Le but est de démontrer votre compréhension des bases de données, et votre capacité à concevoir une architecture cohérente.
+
+Vous êtes libres de :
+* simuler les données,
+* utiliser des données factices,
+* simplifier fortement l'interface,
+* adapter les règles de points ou des rencontres.
+
+## En cas de question
+
+En cas de doute ou de besoin de clarification, veuillez vous adresser directement à votre enseignant.
+
+<Aside type="caution" title="Attention">
+Attention : les réponses fournies à un groupe peuvent différer de celles données à un autre.
+Cela s'explique par des interprétations parfois différentes d'une demande client.
+</Aside>
