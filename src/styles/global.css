@@ -1,1 +1,30 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+
+/* article.card .body * {
+    padding-left: 1em;
+}
+
+article.card .body div{
+    padding-left: 0px;
+    & h3 {
+        color: oklch(from blue calc(l + 0.2) c calc(h - 50));
+        font-size: 1.5rem;
+        padding-left: 0px;
+    }
+}
+
+article.card table {
+    width: fit-content;
+    margin: 1em auto;
+    & thead tr th {
+        text-align: center;
+    }
+} */
+
+article.card h3 {
+    font-size: 1.5rem;
+}
+
+.inline {
+    display: inline;
+}

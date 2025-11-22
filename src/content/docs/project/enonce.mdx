@@ -2,24 +2,41 @@
 title: Projet de fin de cours — Architecture & Bases de Données
 ---
 import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+import "../../../styles/global.css"
 
 
-## Détails Poesi
+<Card title="Modalités" icon="list-format">
 
 ### Pondération
 
-Le projet vaut pour 80% de l'ue
+L'évaluation de l'ue se déroule de la manière suivante :
+
+|Pondération|Matière|
+|---|---|
+|80%|Défense du projet|
+|20%|QCM sur la partie théorie|
 
 ### Groupes
 
 Le projet peut se faire par groupe de 2-3.
 
-### Deadline
+### <Icon name="gitlab" size="2rem" class="inline" /> Git
+Un dépôt git sera mis à votre disposition après inscription via le formulaire.
+Celui ci doit être utilisé pour la remise des livrables.
+
+### <Icon name="seti:clock" size="2rem" class="inline" /> Deadlines
 
 |Phase|Date|
 |---|---|
-|Phase 1 (inscription)| 19 décembre 2025 (23h55)|
+|Phase 1 (Validation inscription à la défense)| 19 décembre 2025 (23h55)|
 |Phase 2 & 3 | 04 janvier 2026 (23h55)|
+
+<Aside type="danger" title="Détails de validation à la défense">
+* Un projet ne pourra être défendu que si la phase 1 a été terminée endeans le délais imposé.
+* Le tag (`fin phase I`) devra être ajouté sur le commit correspondant.
+</Aside>
+
+</Card>
 
 ## Rapport du chef de projet après rencontre avec le client
 
@@ -66,25 +83,27 @@ L'interface peut être rudimentaire : son rôle est uniquement de permettre la d
 ## Fonctionnalités minimales à implémenter
 ### Gestion des utilisateurs
 
-* créer un utilisateur ;
+* Créer un utilisateur ;
 * gérer un ensemble de centres d'intérêt pour chaque utilisateur ;
 * stocker certaines données sous forme structurée, d'autres sous forme libre (au choix selon vos SGBD).
 
 ### Rencontres (simulées)
 
-* simuler une rencontre entre deux utilisateurs :
+Simuler une rencontre entre deux utilisateurs :
+
 * choix manuel des utilisateurs,
 * choix d'un lieu ou d'un intérêt,
 * enregistrer cette rencontre dans vos différents systèmes de données, selon votre logique de répartition.
 
 ### Points de sociabilité
 
-* attribuer automatiquement un certain nombre de points à chaque rencontre (logique à définir par votre équipe) ;
+* Attribuer automatiquement un certain nombre de points à chaque rencontre (logique à définir par votre équipe) ;
 * stocker et afficher ces points.
 
 ### Recherche
 
 Permettre une recherche parmi :
+
 * les utilisateurs,
 * les centres d'intérêt,
 * les rencontres passées.
@@ -159,27 +178,27 @@ Un scénario simple montrant :
 
 <Steps>
 1. Phase 1 🥉 - projet minimal (maximum 10/20)
-   * ☑️ Utilisation de trois systèmes de gestion de données ;
-   * ☑️ architecture simple en services ;
-   * ☑️ fonctionnalités minimales ;
-   * ☑️ documentation correcte.
+   * [x] Utilisation de trois systèmes de gestion de données ;
+   * [x] architecture basique ;
+   * [x] fonctionnalités minimales ;
+   * [x] documentation correcte.
 
    <Aside type="caution" title="Inscription">
-   La finalisation de cette phase est nécessaire pour valider l'inscription. Attention à la deadline (section deadline). 
+   La finalisation de cette phase est nécessaire pour valider l'inscription. Attention à la [deadline](#-deadlines). 
    </Aside>
 
 1. Phase 2 🥈 — Projet complet (maximum 14/20)
-   * ☑️ Utilisation de davantage de systèmes de données ;
-   * ☑️ architecture claire et bien justifiée ;
-   * ☑️ requêtes avancées et gestion plus riche des données ;
-   * ☑️ documentation structurée et propre.
+   * [x] Utilisation de davantage de systèmes de données ;
+   * [x] architecture claire et justifiée ;
+   * [x] requêtes avancées et gestion plus riche des données ;
+   * [x] documentation structurée et propre.
 
 1. Phase 3 🥇 — Projet excellent (maximum 20/20)
-   * ☑️ Architecture proche d'une approche orientée services/microservices ;
-   * ☑️ répartition très réfléchie des données entre les systèmes ;
-   * ☑️ modèles optimisés et requêtes complexes ;
-   * ☑️ documentation exemplaire ;
-   * ☑️ démonstration maîtrisée et fluide.
+   * [x] Architecture évolutive ;
+   * [x] répartition très réfléchie des données entre les systèmes ;
+   * [x] modèles optimisés et requêtes complexes ;
+   * [x] documentation exemplaire ;
+   * [x] démonstration maîtrisée et fluide.
 </Steps>
 
 ## Libertés
