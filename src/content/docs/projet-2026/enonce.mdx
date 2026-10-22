@@ -61,7 +61,8 @@ L'entreprise souhaiterait disposer d'un système où:
 2) Deux documents puissent être mis en relation si les sujets traités sont jugés proches.
 Par exemple: un document sur le framework Spring sera mis en relation avec les règles de bonnes pratiques applicables aux développeurs Java.
 
-3) Le système doit permettre de voir les documents reliés à un document en cours de consultation et, si l'utilisateur le souhaite, passer à la lecture de ces documents facilement.
+3) Le système doit permettre de visualiser les documents reliés, directement ou indirectement, à un document donné.
+Par exemple: si un document sur la cybersécurité est lié à un document sur les règles de bonnes pratiques Java, celui-ci sera également mentionné dans la page sur Spring.
 
 4) Une recherche de documents et d'utilisateurs doit évidemment être possible.
 
@@ -75,7 +76,7 @@ Nous vous autorisons donc à apporter les simplifications suivantes:
 
 1) Une interface utilisateur est évidemment nécessaire (pas d'application console). Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que toutes les contraintes fonctionnelles que nous vous imposons (voir ci-dessous) puissent être illustrées.
 
-2) Le contenu des documents doit être stocké, d'une façon ou d'une autre. Vous êtes libre de fixer une limite supérieure sur la taille du contenu d'un article (exemple: 10 MB). Vous êtes également libre de simplifier le format de ce contenu (supposer que l'article ne contiendra que du texte, par exemple).
+2) Le contenu des documents doit être stocké, d'une façon ou d'une autre. Vous êtes libre de fixer une limite supérieure sur la taille du contenu d'un article, mais ne descendez pas en dessous de 1MB. Vous êtes également libre de simplifier le format de ce contenu (supposer que l'article ne contiendra que du texte, par exemple).
 
 3) Vous êtes libre de simuler les données des documents et d'utiliser des données factices pour les utilisateurs.
 
@@ -96,16 +97,17 @@ Votre application doit permettre, au niveau:
 **Des documents**:
 
 - encoder un nouveau document et afficher le contenu d'un document existant.
-- chaque document comprendra, au minimum: un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés. 
+- chaque document comprendra, au minimum: un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés. La taille maximum du contenu d'un document doit être au minimum d'1MB.
 - vous ne pouvez pas faire d'hypothèse à priori sur le nombre de documents qui seront liés à un document donné (ce nombre peut-être 0, mais peut aussi être très grand, ...).
-- afficher un document (ainsi que les données reprises ci-dessus) donné.
+- afficher un document (ainsi que toutes les données associées).
+- il doit être possible d'afficher les documents liés, directement ou indirectement, au document en cours d'affichage.
 
 **Des fonctionnalités de recherche**:
 
 Il doit être possible de faire une recherche sur:
 
 - les utilisateurs.
-- les documents. 
+- les documents et les liens entre ces documents.
 
 Important: **Notre appréciation de votre travail sera notamment basé sur la variété des possibilités de recherche proposées.** (Exemple: recherche sur le titre d'un document, sur son contenu, sur le nom d'un utilisateur, etc.)
 
@@ -117,7 +119,7 @@ Attention: Ne pas respecter ces contraintes est synonyme d'échec à l'examen. A
 Votre application doit:
 
 - utiliser plusieurs types de SGBD. Nous vous demandons au moins 3 SGBD distincts. Important: **utiliser un SGBD relationnel est permis**, et même encouragé lorsque c'est pertinent.
-- répartir les données de façon cohérentes entre ces systèmes.
+- répartir les données de façon cohérentes entre ces systèmes. En particulier, le stockage du contenu d'un document doit être soigneusement pensé.
 - comporter une interface utilisateur (pas d'application console). 
 - présenter une découpe soignée du code, structurée en service métier cohérents. Tous vos services peuvent tourner dans un seul programme/processus, mais doivent être clairement séparés dans le code.
 
