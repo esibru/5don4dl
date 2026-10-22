@@ -42,7 +42,7 @@ Celui ci doit être utilisé pour la remise des livrables.
 
 </Card>
 
-## Introduction
+### Introduction
 
 Une entreprise faisant du développement logiciel de haut niveau (pensez à Google, Amazon, Apple, ...) souhaite vous engager pour mettre en place un système de documentation portant sur les diverses technologies utilisées par ses développeurs.
 
@@ -53,3 +53,68 @@ Cette documentation portera potentiellement sur tous éléments utilisés par le
 - les règles de bonnes pratiques générales que l'entreprise demande à ses développeurs de respecter,
 - les règles de sécurité à respecter impérativement par les employés,
 - etc.
+
+L'entreprise souhaiterait disposer d'un système où:
+
+1) Chaque employé de l'entreprise devra pouvoir se connecter au sein du système. Les employés n'ont pas tous les même droits. Certains pourront uniquement consulter un document technique, d'autres pourront aussi créer un tel document.
+
+2) Deux documents puissent être mis en relation si les sujets traités sont jugés proches.
+Par exemple: un document sur le framework Spring sera mis en relation avec les règles de bonnes pratiques applicables aux développeurs Java.
+
+Le système doit permettre de voir les documents reliés à un document en cours de consultation et, si l'utilisateur le souhaite, passer à la lecture de ces documents facilement.
+
+3) Une recherche dans de documents et d'utilisateurs doit évidemment être possible.
+
+4) Les documents doivent être accessibles rapidement partout dans le monde. Le volet "performance" (retrouver rapidement un document) est donc à prendre en compte.
+
+### Simplifications autorisées:
+
+Dans le cadre de ce projet, nous vous autorisons à apporter les simplifications suivante:
+
+1) Une interface utilisateur est évidemment nécessaire. Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que les fonctionnalités de l'application (voir ci-dessous) puissent être illustrées.
+
+2) Une application web est à priori nécessaire ici (de façon à permettre à tout employé de part le monde de s'y connecter). Nous vous autorisons cependant à faire une simple application desktop si cela est plus simple pour vous.
+
+3) Le contenu exact des documents doit être stocké dans des fichiers externes, stockés quelque part sur une machine. Nous vous autorisons sur ce point à simplifier les choses autant que vous le souhaitez. Exemple: de simples fichiers texte stockés dans un dossier de votre ordinateur personnel. L'application charge le contenu d'un fichier lorsque c'est nécessaire.
+
+### Contraintes fonctionnelles:
+
+(Attention: Ne pas respecter ces contraintes est synonyme d'échec à l'examen)
+
+Votre applicaiton doit permettre, au niveau:
+
+Des utilisateurs: 
+
+- encoder un nouvel utilisateur,
+- gérer les niveaux de privilège d'un utilisateur donné,
+- rechercher un utilisateur,  
+- rechercher les documents publiés par un utilisateur.
+
+Des documents:
+
+- encoder un nouveau document,
+- encoder, pour chaque document, un titre et un contenu, un temps de lecture approximative, ainsi qu'une liste (éventuellement vide) de documents reliés
+- faire une recherche dans les titres des documents (pas sur les contenus).
+- rechercher les documents reliés à un document donné.
+
+### Contraintes techniques:
+
+Attention: Ne pas respecter ces contraintes est synonyme d'échec à l'examen.
+
+Votre application doit:
+
+- utiliser plusieurs types de SGBD distincts. Nous vous demandons au moins 3 SGBD distincts. Important: *utiliser un SGBD relationnel est permis*, et même encouragé lorsque c'est pertinent.
+- répartir les données de façon cohérentes entre ces systèmes.
+- comporter une interface utilisateur (pas d'application console). 
+- présenter une découpe soignée du code, structurée en service métier cohérents. Tous vos services peuvent tourner dans un seul programme/processus, mais doivent être clairement séparés dans le code.
+
+### Contraintes pédagogiques:
+
+Attention: Ne pas respecter ces contraintes est synonyme d'échec à l'examen.
+
+- votre application sera accompagnée d'une documentation soignée, sous forme de slides. Ces slides seront utilisés lors de votre présentation pour votre examen oral.
+
+- vous devez être capables de justifier et expliquer en détail non seulement le fonctionnement de l'application, mais aussi le code proposé, le fonctionnement des divers moteurs de base de données utilisés.
+
+- vous devez également savoir justifier les SGBD choisis (relationnel, clé-valeur, orienté document, ...) lors de l'examen oral. 
+
