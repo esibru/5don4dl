@@ -76,9 +76,9 @@ Nous vous autorisons donc à apporter les simplifications suivantes:
 
 1) Une interface utilisateur est évidemment nécessaire (pas d'application console). Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que toutes les contraintes fonctionnelles que nous vous imposons (voir ci-dessous) puissent être illustrées.
 
-2) Le contenu des documents doit être stocké, d'une façon ou d'une autre. Vous êtes libre de fixer une limite supérieure sur la taille du contenu d'un article, mais ne descendez pas en dessous de 1MB. Vous êtes également libre de simplifier le format de ce contenu (supposer que l'article ne contiendra que du texte, par exemple).
+2) Le contenu des documents doit être stocké, d'une façon ou d'une autre. Vous êtes également libre de simplifier le format de ce contenu (supposer que l'article ne contiendra que du texte, par exemple). Vous êtes également libre de fixer une limite supérieure sur la taille du contenu d'un article, mais ne descendez pas en dessous de 1MB (cette borne est énorme pour de simples fichiers textes, mais mieux vaut prévoir large).
 
-3) Vous êtes libre de simuler les données des documents et d'utiliser des données factices pour les utilisateurs.
+3) Vous êtes libre de simuler des données et d'utiliser des données factices pour illustrer les fonctionalités de votre application.
 
 ### Contraintes fonctionnelles:
 
@@ -90,7 +90,7 @@ Votre application doit permettre, au niveau:
 
 - encoder un nouvel utilisateur et afficher les données d'un utilisateur existant.
 
-- gérer les niveaux de privilège d'un utilisateur donné. Les différents niveaux de privilèges implémentés sont laissés à votre appréciation, mais seront préciséments définis et gérer au sein de l'application.
+- gérer les niveaux de privilège d'un utilisateur donné. Les différents niveaux de privilèges implémentés sont laissés à votre appréciation, mais seront précisément définis et gérés au sein de l'application.
 
 - afficher les documents écrit par un utilisateur donné.
 
@@ -98,7 +98,7 @@ Votre application doit permettre, au niveau:
 
 - encoder un nouveau document et afficher le contenu d'un document existant.
 - chaque document comprendra, au minimum: un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés. La taille maximum du contenu d'un document doit être au minimum d'1MB.
-- vous ne pouvez pas faire d'hypothèse à priori sur le nombre de documents qui seront liés à un document donné (ce nombre peut-être 0, mais peut aussi être très grand, ...).
+- vous ne pouvez pas faire d'hypothèse à priori sur le nombre de documents qui seront liés à un document donné (ce nombre peut-être 0, mais peut aussi être très grand ...).
 - afficher un document (ainsi que toutes les données associées).
 - il doit être possible d'afficher les documents liés, directement ou indirectement, au document en cours d'affichage.
 
