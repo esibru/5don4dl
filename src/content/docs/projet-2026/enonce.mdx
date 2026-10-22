@@ -71,7 +71,7 @@ Le système doit permettre de voir les documents reliés à un document en cours
 
 Dans le cadre de ce projet, nous vous autorisons à apporter les simplifications suivantes:
 
-1) Une interface utilisateur est évidemment nécessaire. Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que les contraintes fonctionnelles que nous vous imposons (voir ci-dessous) puissent être implémentées et illustrées.
+1) Une interface utilisateur est évidemment nécessaire. Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que toutes les contraintes fonctionnelles que nous vous imposons (voir ci-dessous) puissent être illustrées.
 
 2) Une application web est à priori nécessaire ici (de façon à permettre à tout employé de part le monde de s'y connecter). Nous vous autorisons cependant à faire une simple application desktop si cela est plus simple pour vous.
 
@@ -85,17 +85,23 @@ Votre applicaiton doit permettre, au niveau:
 
 **Des utilisateurs**: 
 
-- encoder un nouvel utilisateur,
-- gérer les niveaux de privilège d'un utilisateur donné,
-- rechercher un utilisateur,  
-- rechercher les documents publiés par un utilisateur.
+- encoder un nouvel utilisateur.
+- gérer les niveaux de privilège d'un utilisateur donné.
 
 **Des documents**:
 
-- encoder un nouveau document,
-- encoder, pour chaque document, un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés
-- faire une recherche dans les titres des documents (pas sur les contenus).
-- rechercher les documents reliés à un document donné.
+- encoder un nouveau document.
+- encoder, pour chaque document, un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés.
+
+**Des fonctionnalités de recherche**:
+
+Il doit être possible de faire une recherche sur:
+
+- les utilisateurs.
+- les documents publiés par un utilisateur.
+- les titres des documents.
+- les contenus des documents.
+- les documents reliés à un document donné.
 
 ### Contraintes techniques:
 
