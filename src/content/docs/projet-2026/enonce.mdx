@@ -51,7 +51,7 @@ Cette documentation portera potentiellement sur tous les éléments utilisés pa
 - la façon d'utiliser une API développée par l'entreprise elle-même,
 - des détails techniques propre à une partie d'un framework utilisé par les développeurs,
 - les règles de bonnes pratiques générales que l'entreprise demande à ses développeurs de respecter,
-- les règles de sécurité à respecter impérativement par les employés,
+- les règles de cybersécurité à respecter impérativement par les employés,
 - etc.
 
 L'entreprise souhaiterait disposer d'un système où:
@@ -61,15 +61,17 @@ L'entreprise souhaiterait disposer d'un système où:
 2) Deux documents puissent être mis en relation si les sujets traités sont jugés proches.
 Par exemple: un document sur le framework Spring sera mis en relation avec les règles de bonnes pratiques applicables aux développeurs Java.
 
-Le système doit permettre de voir les documents reliés à un document en cours de consultation et, si l'utilisateur le souhaite, passer à la lecture de ces documents facilement.
+3) Le système doit permettre de voir les documents reliés à un document en cours de consultation et, si l'utilisateur le souhaite, passer à la lecture de ces documents facilement.
 
-3) Une recherche de documents et d'utilisateurs doit évidemment être possible.
+4) Une recherche de documents et d'utilisateurs doit évidemment être possible.
 
-4) Les documents doivent être accessibles rapidement partout dans le monde. Le volet "performance" (retrouver rapidement un document) est donc à prendre en compte.
+5) Les documents doivent être accessibles rapidement partout dans le monde. Le volet "performance" (retrouver rapidement un document) est donc à prendre en compte.
 
 ### Simplifications autorisées:
 
-Dans le cadre de ce projet, nous vous autorisons à apporter les simplifications suivantes:
+Dans le cadre de ce projet, le but est de démontrer votre compréhension des bases de données, et votre capacité à concevoir une architecture cohérente. 
+
+Nous vous autorisons donc à apporter les simplifications suivantes:
 
 1) Une interface utilisateur est évidemment nécessaire. Nous vous autorisons cependant à simplifier celle-ci au maximum, du moment que toutes les contraintes fonctionnelles que nous vous imposons (voir ci-dessous) puissent être illustrées.
 
@@ -77,7 +79,7 @@ Dans le cadre de ce projet, nous vous autorisons à apporter les simplifications
 
 3) Le contenu des documents doit être stocké, d'une façon où d'une autre. Vous êtes libre de fixer une limite supérieure sur la taille du contenu d'un article (exemple: 10 MB). Vous êtes également libre de simplifier le format (supposer que l'article ne contiendra que du texte, par exemple).
 
-4) Vous êtes libre de simuler les données des documents, utiliser des données factices pour les utilisateurs
+4) Vous êtes libre de simuler les données des documents et d'utiliser des données factices pour les utilisateurs.
 
 ### Contraintes fonctionnelles:
 
@@ -87,20 +89,24 @@ Votre application doit permettre, au niveau:
 
 **Des utilisateurs**: 
 
-- encoder un nouvel utilisateur.
+- encoder un nouvel utilisateur et afficher les données d'un utilisateur existant.
 - gérer les niveaux de privilège d'un utilisateur donné.
+- afficher les documents écrit par un utilisateur donné.
 
 **Des documents**:
 
-- encoder un nouveau document.
-- encoder, pour chaque document, un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés.
+- encoder un nouveau document et afficher le contenu d'un document existant.
+- chaque document comprendra, au minimum: un titre et un contenu, un temps de lecture approximative, un auteur (qui sera toujours un utilisateur du système), ainsi qu'une liste (éventuellement vide) de documents reliés. 
+- afficher un document (ainsi que les données reprises ci-dessus) donné.
 
 **Des fonctionnalités de recherche**:
 
 Il doit être possible de faire une recherche sur:
 
 - les utilisateurs.
-- les documents. Diverses données sont liées à un document (auteur, titre, temps de lecture, documents liés, ...), notre appréciation de votre travail sera notamment basé sur la variété des possibilités de recherche proposées.
+- les documents. 
+
+Important: **Notre appréciation de votre travail sera notamment basé sur la variété des possibilités de recherche proposées.**
 
 
 ### Contraintes techniques:
