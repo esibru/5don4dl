@@ -57,7 +57,7 @@ Et dès lors,
 
 ## Création des tables
 
-``` SQL
+``` sql
 -- Suppression si existant (utile pour relancer le script)
 DROP TABLE IF EXISTS troncon;
 DROP TABLE IF EXISTS ville;
@@ -86,7 +86,7 @@ CREATE TABLE troncon (
 
 ## Population des tables 
 
-``` SQL
+``` sql
 -- villes
 INSERT INTO ville (idville, nom, pays) VALUES
 (1, 'Bruxelles', 'Belgique'),
@@ -113,7 +113,7 @@ INSERT INTO troncon (idtroncon, villeDepart, villeArrivee, longueurKm) VALUES
 
 ## Atteignabilité 1 tronçon
 
-```SQL
+``` sql
 SELECT DISTINCT v2.nom, v2.pays
 FROM ville v1
 JOIN troncon t ON v1.idville = t.villeDepart
@@ -123,7 +123,7 @@ WHERE v1.nom = 'Bruxelles';
 
 ## Atteignabilité 2 tronçons
 
-```SQL
+``` sql
 SELECT DISTINCT v2.nom, v2.pays
 FROM ville v1
 JOIN troncon t1 ON v1.idville = t1.villeDepart
@@ -133,7 +133,7 @@ WHERE v1.nom = 'Bruxelles';
 ```
 ## Atteignabilité 3 tronçons
 
-```SQL
+``` sql
 SELECT DISTINCT v2.nom, v2.pays
 FROM ville v1
 JOIN troncon t1 ON v1.idville = t1.villeDepart
@@ -144,7 +144,7 @@ WHERE v1.nom = 'Bruxelles';
 ```
 ## Atteignabilité n tronçons
 
-```SQL
+``` sql
 WITH RECURSIVE chemins AS (
     -- Point de départ : Bruxelles
     SELECT v.idville, v.nom, v.pays
