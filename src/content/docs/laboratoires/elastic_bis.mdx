@@ -1,0 +1,18 @@
+---
+title: Compléments sur Elasticsearch
+
+---
+import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
+
+L'énoncé de laboratoire sur Elasticsearch simplifie fortement la façon dont le système stocke et procède pour faire une recherche sur les données. Le présent énoncé rentre un peu plus dans les détails.
+
+## 1) Les index sous Elastisearch
+
+Chaque index créé sous Elasticsearch est lié à un `mapping`, qui définit notamment les noms des champs des documents JSON qui seront stockés et les types de données qui seront utilisés pour chaque champ.
+
+La documentation officielle d'Elasticsearch donne décrit mapping associé à un index de la façon suivante:
+
+<Aside>
+Definitions that specify field data types, and control how data is indexed and queried. Understanding field data types helps you write effective queries and avoid indexing problems.
+<Aside>
+
