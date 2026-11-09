@@ -29,10 +29,10 @@ export default defineConfig({
                     { label: 'Labo 7, 8 & 9 - PAE (mini-projet)', slug: 'laboratoires/exercice/pae'},
                   ],
               },
-              // {
+              //{
               //   label: "Projet",
               //   items: [
-              //     { label: "Énoncé", slug: 'projet/enonce' },
+              //     { label: "Énoncé", slug: 'projets/enonce-2026' },
               //   ],
               // },
           ],

@@ -4,7 +4,7 @@ title: Compléments sur Elasticsearch
 ---
 import { Card, Aside, Icon, Steps } from '@astrojs/starlight/components';
 
-L'énoncé de laboratoire sur Elasticsearch simplifie fortement la façon dont le système stocke les données et procède pour faire une recherche sur celles-ci. Ceci pose notamment des problèmes pour la recherche dans des champs au format texte. Le présent énoncé rentre un peu plus dans les détails, et corrige les requêtes de recherche proposées dans le TD précédent.
+L'énoncé de laboratoire sur Elasticsearch simplifie fortement la façon dont le système stocke les données et procède pour faire une recherche sur celles-ci. Ceci pose notamment des problèmes pour la recherche dans des champs au format texte. Le présent énoncé rentre un peu plus dans les détails, et corrige la requête de recherche floue proposée dans le TD précédent.
 
 ## 1) Les index sous Elastisearch
 
@@ -20,7 +20,7 @@ Le mapping en question est souple: on peut ajouter un nouveau champ à tout mome
 
 ## 2) Les types de données sous Elasticsearch
 
-Elasticsearch propose de nombreux types de données pour les champs des documents JSON. Par exemple, pour stocker du texte, Elasticsearch met à notre disposition les types `text` et `keyword`.
+Elasticsearch propose de nombreux types de données pour les champs des documents JSON. Par exemple, pour stocker du texte, Elasticsearch met à notre disposition les types `text` et `keyword`. Constultez la documentation en ligne pour avoir un aperçu des types de données mis à votre disposition.
 
 Par défaut, le dynamic mapping stocke les chaînes de caractère au format `text`. En quoi cela est-il important ? 
 
@@ -40,7 +40,7 @@ search = esClient.search(s -> s
                 .query(q -> q
                         .match(m -> m
                                 .field("ue")
-                                .query("DON4")
+                                .query("DOM")
                                 .fuzziness(distance)
                         )
                 ),
@@ -48,4 +48,14 @@ search = esClient.search(s -> s
 );
 ```
 
+Il est également possible, lors de la création de l'index, de définir le type de données du champ comme étant `keyword` (et dans ce cas la requête fuzzy proposée au TD précédent fonctionnera). Mais dans ce cas, l'analyseur n'est pas appliqué ce qui rend certaines recherches impossibles (le stemming par exemple). Tout dépend de ce que l'on souhaite rechercher. Comme précisé par la documention:
+
+*You can map a field containing unstructured content to either a text or keyword family field. The best field type depends on the nature of the content and how you plan to search the field.*
+
+<Card title="Configurer le mapping" icon="pencil">
+Dans votre code Java, créez un nouvel index avec trois champs avec trois types de données différents que vous définirez dans un mapping approprié (voyez la fin du TD ElasticSearch pour la façon de configurer le mapping).
+</Card>
+
+
+N'hésitez pas à consulter la documentation officielle d'ElasticSeach pour plus de détails sur la façon de configurer un index donné.
 
